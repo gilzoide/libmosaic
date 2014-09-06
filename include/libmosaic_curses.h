@@ -7,7 +7,7 @@
 
 #include <curses.h>
 #include <panel.h>
-#include "mosaic.h"
+#include "libmosaic.h"
 
 /**
  * Curses Mosaic: wraps the MOSAIC; list and curses interface

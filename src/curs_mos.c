@@ -1,4 +1,4 @@
-#include "curs_mos.h"
+#include "libmosaic_curses.h"
 
 
 void InitIMGS (IMGS *everyone) {
