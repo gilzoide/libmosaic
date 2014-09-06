@@ -1,5 +1,5 @@
 # libmosaic build script
-Import (['env', 'curs_env'])
+Import (['env', 'curs_env', 'headers', 'instHeaders'])
 
 # the mosaic libraries
 mosaic = env.SharedLibrary ('libmosaic', 'mosaic.c')
@@ -14,9 +14,9 @@ Default ([mosaic, curs_mos, color, moscat])
 
 ## INSTALL STUFF ##
 # includes -> *.h
-include = []
-for header in Glob ('#include/*.h'):
-	include.append (Command ('/usr/include/' + header.get_path ().split ('/')[-1], header, Copy ('$TARGET', '$SOURCE')))
+includes = []
+for i in range (len (headers)):
+	includes.append (Command (instHeaders[i], '#include/' + headers[i], Copy ('$TARGET', '$SOURCE')))
 
 curs_env.Install ('/usr/bin', moscat)
 curs_env.Install ('/usr/lib', [mosaic, curs_mos, color])

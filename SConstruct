@@ -1,16 +1,40 @@
 # libmosaic, an Asc Art intended library
-# Created by Gil Barbosa Reis
+# Created by Gil "gilzoide" Barbosa Reis
 
-env = Environment (
-	CCFLAGS = '-Wall -pipe',
-	CPPPATH = '#include',
-)
-env.Decider ('MD5-timestamp')
+Help ("""
+Welcome to the libmosaic's build script
 
-curs_env = env.Clone (LIBS = ['panel', 'curses'], LIBPATH = ['/usr/lib', '/usr/local/lib'])
+The default build output is the build/ directory.
+This package provide the shared libraries for mosaic and curses wrapper, 
+and a cat application (moscat).
 
-# build the editor in the 'build' directory, without duplicating
-VariantDir ('build', 'src', duplicate = 0)
-SConscript ('build/SConscript', exports = ['env', 'curs_env'])
+You can `scons install` everything in the /usr/{lib,include,bin}/ directories.
+For installing only a part of libmosaic (maybe you want only the shared 
+libraries), you can `scons install-lib` or `scons install-include` or 
+`scons install-bin`.
 
-curs_env.Command ("uninstall", None, Delete (FindInstalledFiles()))
+Everything can be uninstalled running `scons uninstall`.
+""")
+
+if not GetOption ('help'):
+	env = Environment (
+		CCFLAGS = '-Wall -pipe',
+		CPPPATH = '#include',
+	)
+	env.Decider ('MD5-timestamp')
+	
+	# headers and install headers
+	headers = ['mosaic.h', 'color.h', 'curs_mos.h']
+	instHeaders = ['/usr/include/' + h for h in headers]
+
+	curs_env = env.Clone (LIBS = ['panel', 'curses'], LIBPATH = ['/usr/lib', 
+			'/usr/local/lib'])
+
+	# build mosaic in the 'build' directory, without duplicating
+	VariantDir ('build', 'src', duplicate = 0)
+	SConscript ('build/SConscript', exports = ['env', 'curs_env', 
+			'headers', 'instHeaders'])
+
+	# headers is defined in the SConscript file globally
+	curs_env.Command ("uninstall", None, Delete (FindInstalledFiles() 
+			+ instHeaders))
