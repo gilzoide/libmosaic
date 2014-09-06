@@ -1,0 +1,7 @@
+# text backups
+*~
+*.swp
+# build stuff
+build/*
+# scons stuff
+*scons*

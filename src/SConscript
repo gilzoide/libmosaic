@@ -1,0 +1,27 @@
+# libmosaic build script
+Import (['env', 'curs_env'])
+
+# the mosaic libraries
+mosaic = env.SharedLibrary ('libmosaic', 'mosaic.c')
+curs_mos = curs_env.SharedLibrary ('libmosaic_curses', 'curs_mos.c')
+color = curs_env.SharedLibrary ('libmosaic_color', 'color.c')
+
+# the moscat application
+cat_src = ['moscat.c', mosaic, color]
+moscat = env.Program ('moscat', cat_src)
+
+Default ([mosaic, curs_mos, color, moscat])
+
+## INSTALL STUFF ##
+# includes -> *.h
+include = []
+for header in Glob ('#include/*.h'):
+	include.append (Command ('/usr/include/' + header.get_path ().split ('/')[-1], header, Copy ('$TARGET', '$SOURCE')))
+
+curs_env.Install ('/usr/bin', moscat)
+curs_env.Install ('/usr/lib', [mosaic, curs_mos, color])
+# targets: install{,-bin,-lib,-include}
+curs_env.Alias ('install-lib', '/usr/lib')
+curs_env.Alias ('install-bin', '/usr/bin')
+curs_env.Alias ('install-include', '/usr/include')
+curs_env.Alias ('install', ['install-lib', 'install-bin', 'install-include'])
