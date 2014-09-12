@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
-#include "libmosaic_color.h"
+#include "color.h"
 
 /**
  * "MOSAIC" in Nmos mosaic format

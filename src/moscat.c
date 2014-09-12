@@ -3,8 +3,8 @@
  */
 
 #include <stdio.h>
-#include "libmosaic.h"
-#include "libmosaic_color.h"
+#include "mosaic.h"
+#include "curs_mos.h"
 
 /* ARGP for parsing the arguments */
 #include <argp.h>

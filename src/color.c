@@ -1,5 +1,5 @@
 #include <string.h>
-#include "libmosaic_color.h"
+#include "color.h"
 
 void InitColors () {
 	assume_default_colors (-1, -1);	// there's the default terminal color (Normal, in the colors enum)

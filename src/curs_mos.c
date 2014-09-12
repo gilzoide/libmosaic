@@ -1,4 +1,4 @@
-#include "libmosaic_curses.h"
+#include "curs_mos.h"
 
 
 void InitIMGS (IMGS *everyone) {
@@ -60,18 +60,18 @@ int ResizeCURS_MOS (CURS_MOS *target, int new_height, int new_width) {
 }
 
 
-void RefreshCURS_MOS (CURS_MOS *current) {
-	wmove (current->win, 0, 0);
+void RefreshCURS_MOS (CURS_MOS *target) {
+	wmove (target->win, 0, 0);
 	
 	// write in the WINDOW
 	int i, j;
-	for (i = 0; i < current->img.height; i++) {
-		for (j = 0; j < current->img.width; j++) {
-			mvwaddch (current->win, i, j, current->img.mosaic[i][j]);
+	for (i = 0; i < target->img.height; i++) {
+		for (j = 0; j < target->img.width; j++) {
+			mvwaddch (target->win, i, j, target->img.mosaic[i][j]);
 		}
 	}
 
-	prefresh (current->win, current->y, current->x, 0, 0, LINES - 2, COLS - 1);
+	prefresh (target->win, target->y, target->x, 0, 0, LINES - 2, COLS - 1);
 }
 
 

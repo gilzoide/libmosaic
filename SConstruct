@@ -24,8 +24,8 @@ if not GetOption ('help'):
 	env.Decider ('MD5-timestamp')
 	
 	# headers and install headers
-	headers = ['libmosaic.h', 'libmosaic_color.h', 'libmosaic_curses.h']
-	instHeaders = ['/usr/include/' + h for h in headers]
+	headers = ['mosaic.h', 'color.h', 'curs_mos.h']
+	instHeaders = ['/usr/include/mosaic/' + h for h in headers]
 
 	curs_env = env.Clone (LIBS = ['panel', 'curses'], LIBPATH = ['/usr/lib', 
 			'/usr/local/lib'])

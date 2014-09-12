@@ -7,7 +7,7 @@
 
 #include <curses.h>
 #include <panel.h>
-#include "libmosaic.h"
+#include "mosaic.h"
 
 /**
  * Curses Mosaic: wraps the MOSAIC; list and curses interface
@@ -49,6 +49,12 @@ CURS_MOS *NewCURS_MOS (int new_height, int new_width);
 /** aux for the NewCURS_MOS: creates the right and bottom border */
 void dobox (CURS_MOS *img);
 
+/**
+ * Refreshes target's WINDOW, rewriting it from scratch
+ *
+ * @param[in] target CURS_MOS to have it's WINDOW refreshed
+ */
+void RefreshCURS_MOS (CURS_MOS *target);
 /**
  * Resize a @ref CURS_MOS, resizing the MOSAIC inside and it's WINDOW
  * @sa ResizeCURS_MOS_WINDOW
