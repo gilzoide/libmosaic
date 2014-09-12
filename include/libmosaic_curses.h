@@ -50,18 +50,39 @@ CURS_MOS *NewCURS_MOS (int new_height, int new_width);
 void dobox (CURS_MOS *img);
 
 /**
- * Resize a @ref CURS_MOS, reallocating the necessary memory and resizing it's WINDOW
- * @note This function just resizes the WINDOW, without caring about erasing or printing it on the screen
+ * Resize a @ref CURS_MOS, resizing the MOSAIC inside and it's WINDOW
+ * @sa ResizeCURS_MOS_WINDOW
  * 
- * @param[in] target the target MOSAIC
- * @param[in] new_height MOSAIC's new height
- * @param[in] new_width MOSAIC's new width
+ * @param[in] target the target CURS_MOS
+ * @param[in] new_height CURS_MOS' new height
+ * @param[in] new_width CURS_MOS' new width
  * 
  * @return 0 if successfully resized @ref CURS_MOS
- * @return -1 if allocation failed
+ * @return ERR if allocation failed
  */
 int ResizeCURS_MOS (CURS_MOS *target, int new_height, int new_width);
-
+/**
+ * Resize a @ref CURS_MOS' WINDOW
+ * @sa ResizeCURS_MOS
+ *
+ * @note This function just resizes the WINDOW, without caring about erasing or
+ * showing it on the screen
+ *
+ * @param[in] target the target CURS_MOS
+ * @param[in] new_height CURS_MOS' new height
+ * @param[in] new_width CURS_MOS' new width
+ */
+void ResizeCURS_MOS_WINDOW (CURS_MOS *target, int new_height, int new_width);
+/**
+ * Loads a @ref CURS_MOS from file.
+ *
+ * @param[in] target the target CURS_MOS
+ * @param[in] file_name the name of the loading file
+ *
+ * @return 0 if successfully loaded CURS_MOS
+ * @return errno on fail
+ */
+int LoadCURS_MOS (CURS_MOS *target, const char *file_name);
 /**
  * Only to say if you want to link the img before or after the other in LinkMOSAIC
  */

@@ -16,7 +16,9 @@ Default ([mosaic, curs_mos, color, moscat])
 # includes -> *.h
 includes = []
 for i in range (len (headers)):
-	includes.append (Command (instHeaders[i], '#include/' + headers[i], Copy ('$TARGET', '$SOURCE')))
+	includes.append (Command (instHeaders[i], '#include/' + headers[i],
+			Copy ('$TARGET', '$SOURCE')))
+
 
 curs_env.Install ('/usr/bin', moscat)
 curs_env.Install ('/usr/lib', [mosaic, curs_mos, color])

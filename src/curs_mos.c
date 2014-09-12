@@ -46,20 +46,47 @@ void dobox (CURS_MOS *img) {
 }
 
 
-int ResizeCURS_MOS (CURS_MOS *target, int new_height, int new_width) {
+void ResizeCURS_MOS_WINDOW (CURS_MOS *target, int new_height, int new_width) {
 	delwin (target->win);
 	target->win = newpad (new_height + 1, new_width + 1);
 
-	int i = ResizeMOSAIC (&target->img, new_height, new_width);
-	
-	if (i == -1) {
-		fprintf (stderr, "Resize failed");
-		exit (-1);
-	}
-	
 	dobox (target);
+}
 
-	return i;
+
+int ResizeCURS_MOS (CURS_MOS *target, int new_height, int new_width) {
+	ResizeCURS_MOS_WINDOW (target, new_height, new_width);
+	return ResizeMOSAIC (&target->img, new_height, new_width);
+}
+
+
+void RefreshCURS_MOS (CURS_MOS *current) {
+	wmove (current->win, 0, 0);
+	
+	// write in the WINDOW
+	int i, j;
+	for (i = 0; i < current->img.height; i++) {
+		for (j = 0; j < current->img.width; j++) {
+			mvwaddch (current->win, i, j, current->img.mosaic[i][j]);
+		}
+	}
+
+	prefresh (current->win, current->y, current->x, 0, 0, LINES - 2, COLS - 1);
+}
+
+
+int LoadCURS_MOS (CURS_MOS *target, const char *file_name) {
+	// load the MOSAIC, please
+	int aux = LoadMOSAIC (&target->img, file_name);
+	if (aux != 0)
+		return aux;
+
+	// resize only target's WINDOW, as the MOSAIC was resized on LoadMOSAIC
+	ResizeCURS_MOS_WINDOW (target, target->img.height, target->img.width);
+	// refreshing
+	RefreshCURS_MOS (target);
+
+	return 0;
 }
 
 

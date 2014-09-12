@@ -5,3 +5,6 @@
 build/*
 # scons stuff
 *scons*
+# ctags/cscope
+cscope*
+ctags
