@@ -26,6 +26,27 @@ int NewMOSAIC (MOSAIC *img, int new_height, int new_width) {
 }
 
 
+int mosAddch (MOSAIC *img, int y, int x, int c) {
+	if (y < 0 || y >= img->height || x < 0 || x >= img->width) {
+		return 0;
+	}
+	else {
+		img->mosaic[y][x] = c;
+		return 1;
+	}
+}
+
+
+mos_char mosGetch (MOSAIC *img, int y, int x) {
+	if (y < 0 || y >= img->height || x < 0 || x >= img->width) {
+		return 0;
+	}
+	else {
+		return img->mosaic[y][x];
+	}
+}
+
+
 int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	// old dimensions
 	int old_height = img->height;
@@ -45,8 +66,8 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	// realloc the dinamic stuff
 	// Lines
 	// mosaic:
-	if ((img->mosaic = (unsigned char**) realloc (
-		img->mosaic, new_height * sizeof (unsigned char*))) == NULL)
+	if ((img->mosaic = (mos_char**) realloc (
+		img->mosaic, new_height * sizeof (mos_char*))) == NULL)
 		return -1;
 	for (i = old_height; i < new_height; i++)
 		img->mosaic[i] = NULL;
@@ -59,8 +80,8 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 
 	// Columns
 	for (i = 0; i < new_height; i++) {
-		if ((img->mosaic[i] = (unsigned char*) realloc (
-			img->mosaic[i], new_width * sizeof (unsigned char))) == NULL)
+		if ((img->mosaic[i] = (mos_char*) realloc (
+			img->mosaic[i], new_width * sizeof (mos_char))) == NULL)
 			return -1;
 		if ((img->attr[i] = (Attr*) realloc (
 			img->attr[i], new_width * sizeof (Attr))) == NULL)

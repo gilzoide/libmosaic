@@ -10,13 +10,16 @@
 #include <errno.h>
 #include "color.h"
 
+/// Char representation inside MOSAIC
+typedef unsigned char mos_char;
+
 /**
  * "MOSAIC" in Nmos mosaic format
  */
 typedef struct {
 	int height;	///< img height
 	int	width;	///< img width
-	unsigned char **mosaic;		/**< a height * width sized string: the drawing itself */
+	mos_char **mosaic;		/**< a height * width sized string: the drawing itself */
 	Attr **attr;	/**< a height * width sized array with the attributes for each char. */
 } MOSAIC;
 
@@ -31,7 +34,33 @@ typedef struct {
  */
 inline int MOSAICSize (MOSAIC img);
 
-
+/**
+ * Add a char to the MOSAIC at position y/x
+ * 
+ * @note If position is outside image boundaries, returns 0 
+ *
+ * @param[in] img Target MOSAIC
+ * @param[in] y Y coordinate
+ * @param[in] x X coordinate
+ * @param[in] c Char to be placed
+ *
+ * @return 1 on success
+ * @return 0 on out of boundaries
+ */
+int mosAddch (MOSAIC *img, int y, int x, int c);
+/**
+ * Get the char at position y/x
+ *
+ * @note If position is outside image boundaries, returns 0 
+ *
+ * @param[in] img Target MOSAIC
+ * @param[in] y Y coordinate
+ * @param[in] x X coordinate
+ *
+ * @return Char in mosaic[y][x]
+ * @return 0 on out of boundaries
+ */
+mos_char mosGetch (MOSAIC *img, int y, int x);
 /** 
  * Create a new @ref MOSAIC, allocating the necessary memory
  * 

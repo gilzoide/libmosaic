@@ -35,7 +35,8 @@ typedef struct {
 
 /// Initializes the IMGS
 void InitIMGS (IMGS *everyone);
-
+/// Puts the first CURS_MOS in imgs, making it a circular list with itself
+void CircularIMGS (IMGS *imgs, CURS_MOS *mos);
 /** 
  * Create a new @ref CURS_MOS, allocating the necessary memory
  * 
@@ -114,7 +115,7 @@ void LinkCURS_MOS (CURS_MOS *dest, CURS_MOS *src, enum direction dir);
  * @return 0 on success
  * @return ERR on error
  */
-int mosAddch (CURS_MOS *image, int y, int x, int c);
+int curs_mosAddch (CURS_MOS *image, int y, int x, int c);
 
 /**
  * Displays current CURS_MOS in the stdscr

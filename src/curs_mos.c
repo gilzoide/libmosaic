@@ -1,9 +1,15 @@
 #include "curs_mos.h"
 
 
-void InitIMGS (IMGS *everyone) {
-	everyone->list = NULL;
-	everyone->size = 0;
+void InitIMGS (IMGS *imgs) {
+	imgs->list = NULL;
+	imgs->size = 0;
+}
+
+
+void CircularIMGS (IMGS *imgs, CURS_MOS *mos) {
+	imgs->list = mos;
+	mos->next = mos->prev = mos;
 }
 
 
@@ -106,17 +112,18 @@ void LinkCURS_MOS (CURS_MOS *dest, CURS_MOS *src, enum direction dir) {
 			src->next = aux;
 		}
 	}
-	else
+	else {
 		fprintf (stderr, "Error: trying to link a CURS_MOS to a NULL pointer!!");
+	}
 }
 
 
-int mosAddch (CURS_MOS *image, int y, int x, int c) {
-	if (y >= image->img.height || x >= image->img.width)
+int curs_mosAddch (CURS_MOS *image, int y, int x, int c) {
+	if (!mosAddch (&image->img, y, x, c)) {
 		return ERR;
+	}
 
 	mvwaddch (image->win, y, x, c);
-	image->img.mosaic[y][x] = c;
 	return 0;
 }
 
