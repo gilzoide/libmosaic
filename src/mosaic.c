@@ -139,8 +139,39 @@ int CopyMOSAIC (MOSAIC *dest, MOSAIC *src) {
 }
 
 
-void TrimMOSAIC (MOSAIC *target) {
+void TrimMOSAIC (MOSAIC *target, char resize) {
+	// Rectangle containing the mosaic without blank lines/columns
+	int ULy, ULx, BRy, BRx;
+	BRy = BRx = 0;
+	ULy = target->height - 1;
+	ULx = target->width - 1;
+	int i, j;
+	// check the mosaic
+	for (i = 0; i < target->height; i++) {
+		for (j = 0; j < target->width; j++) {
+			// it's not a blank, so update our rectangle
+			if (mosGetch (target, i, j) != ' ') {
+				ULy = min (ULy, i);
+				ULx = min (ULx, j);
+				BRy = max (BRy, i);
+				BRx = max (BRx, j);
+			}
+		}
+	}
+	// move the data from mosaic[src_y][src_x] to mosaic[i][j]
+	int src_x, src_y;
+	for (src_y = ULy, i = 0; src_y <= BRy; src_y++, i++) {
+		for (src_x = ULx, j = 0; src_x <= BRx; src_x++, j++) {
+			target->mosaic[i][j] = target->mosaic[src_y][src_x];
+			target->mosaic[src_y][src_x] = ' ';
+		}
+	}
 
+	// we already moved the mosaic to (0,0), so if 
+	// asked to resize, just do it and we won't lose any data
+	if (resize) {
+		ResizeMOSAIC (target, BRy - ULy, BRx - ULx);
+	}
 }
 
 

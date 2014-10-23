@@ -99,9 +99,15 @@ int CopyMOSAIC (MOSAIC *dest, MOSAIC *src);
 /**
  * Trims a MOSAIC's blank area in each side of target
  *
+ * @note You can ask TrimMOSAIC to resize your image. It's expensive to
+ * do so, so think carefully about it. If not resizing, it'll just shift
+ * the image, as if you copied the rectangle with the mosaic
+ * and pasted it at (0,0).
+ *
  * @param[in] target Target MOSAIC
+ * @param[in] resize Bool: sould we resize the mosaic?
  */
-void TrimMOSAIC (MOSAIC *target);
+void TrimMOSAIC (MOSAIC *target, char resize);
 
 /**
  * Saves the image in a file
