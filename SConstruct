@@ -17,24 +17,28 @@ Everything can be uninstalled running `scons uninstall`.
 """)
 
 if not GetOption ('help'):
-	env = Environment (
-		CCFLAGS = '-Wall -pipe',
-		CPPPATH = '#include',
-	)
-	env.Decider ('MD5-timestamp')
-	
-	# headers and install headers
-	headers = ['mosaic.h', 'color.h', 'curs_mos.h']
-	instHeaders = ['/usr/include/mosaic/' + h for h in headers]
+    env = Environment (
+        CCFLAGS = '-Wall -pipe -O2',
+        CPPPATH = '#include',
+        CC = 'gcc',
+    )
+    env.Decider ('MD5-timestamp')
+    
+    # headers and install headers
+    headers = ['mosaic.h', 'color.h', 'curs_mos.h']
+    instHeaders = ['/usr/include/mosaic/' + h for h in headers]
 
-	curs_env = env.Clone (LIBS = ['panel', 'curses'], LIBPATH = ['/usr/lib', 
-			'/usr/local/lib'])
+    curs_env = env.Clone (LIBS = ['panel', 'curses'], LIBPATH = ['/usr/lib', 
+            '/usr/local/lib'])
 
-	# build mosaic in the 'build' directory, without duplicating
-	VariantDir ('build', 'src', duplicate = 0)
-	SConscript ('build/SConscript', exports = ['env', 'curs_env', 
-			'headers', 'instHeaders'])
+    # moscat needs mosaic{,_color}, so link with it as a shared library
+    cat_env = env.Clone (LIBS = ['mosaic', 'mosaic_color'], LIBPATH = '#build')
 
-	# headers is defined in the SConscript file globally
-	curs_env.Command ("uninstall", None, Delete (FindInstalledFiles() 
-			+ instHeaders))
+    # build mosaic in the 'build' directory, without duplicating
+    VariantDir ('build', 'src', duplicate = 0)
+    SConscript ('build/SConscript', exports = ['env', 'curs_env', 'cat_env',
+            'headers', 'instHeaders'])
+
+    # headers is defined in the SConscript file globally
+    curs_env.Command ("uninstall", None, Delete (FindInstalledFiles() 
+            + instHeaders))

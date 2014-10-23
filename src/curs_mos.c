@@ -140,4 +140,5 @@ void FreeCURS_MOS (CURS_MOS *image) {
 	FreeMOSAIC (&image->img);
 	del_panel (image->pan);
 	delwin (image->win);
+	free (image);
 }

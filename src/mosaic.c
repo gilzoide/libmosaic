@@ -120,7 +120,7 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 }
 
 
-void CopyMOSAIC (MOSAIC *dest, MOSAIC *src) {
+int CopyMOSAIC (MOSAIC *dest, MOSAIC *src) {
 	// no NULL pointers
 	if (dest && src) {
 		int i, j;
@@ -130,7 +130,17 @@ void CopyMOSAIC (MOSAIC *dest, MOSAIC *src) {
 				dest->attr[i][j] = src->attr[i][j];
 			}
 		}
+
+		return 0;
 	}
+	else {
+		return -1;
+	}
+}
+
+
+void TrimMOSAIC (MOSAIC *target) {
+
 }
 
 

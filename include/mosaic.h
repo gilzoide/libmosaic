@@ -91,8 +91,17 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width);
  *
  * @param[out] dest Target MOSAIC
  * @param[in] src Source MOSAIC
+ *
+ * @return 0 if successfully copied from src to dest
+ * @return -1 otherwise
  */
-void CopyMOSAIC (MOSAIC *dest, MOSAIC *src);
+int CopyMOSAIC (MOSAIC *dest, MOSAIC *src);
+/**
+ * Trims a MOSAIC's blank area in each side of target
+ *
+ * @param[in] target Target MOSAIC
+ */
+void TrimMOSAIC (MOSAIC *target);
 
 /**
  * Saves the image in a file
