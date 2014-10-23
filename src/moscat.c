@@ -3,6 +3,7 @@
  */
 
 #include <stdio.h>
+#include <string.h>
 #include "mosaic.h"
 #include "curs_mos.h"
 
@@ -97,14 +98,15 @@ int main (int argc, char *argv[]) {
 	// image to be loaded
 	MOSAIC img;
 	NewMOSAIC (&img, 0, 0);
-	switch (LoadMOSAIC (&img, arguments.input)) {
-		case -1:
-			fprintf (stderr, "Couldn't open the file, i'm sorry...\n");
-			return 0;
-
-		case 1:
-			fprintf (stderr, "There are no dimensions in this file...\n");
-			return 0;
+	int load_result = LoadMOSAIC (&img, arguments.input);
+	if (load_result == errno) {
+		fprintf (stderr, "Couldn't load file. %s.\n", strerror (errno));
+		return 0;
+	}
+	else if (load_result == 1) {
+		fprintf (stderr, "There are no dimensions in this file... \
+It's probably not a mosaic image!\n");
+		return 0;
 	}
 	
 	if (arguments.dimensions)
