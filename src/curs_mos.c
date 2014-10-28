@@ -19,7 +19,7 @@ CURS_MOS *NewCURS_MOS (int new_height, int new_width) {
 	if ((new_image = (CURS_MOS*) malloc (sizeof (CURS_MOS))) == NULL)
 		return NULL;
 	
-	NewMOSAIC (&new_image->img, new_height, new_width);
+	new_image->img = NewMOSAIC (new_height, new_width);
 
 	// create the curses window and panel
 	new_image->win = newpad (new_height + 1, new_width + 1);
@@ -37,8 +37,8 @@ CURS_MOS *NewCURS_MOS (int new_height, int new_width) {
 
 void dobox (CURS_MOS *img) {
 	int i;
-	int y = img->img.height;
-	int x = img->img.width;
+	int y = img->img->height;
+	int x = img->img->width;
 	// bottom
 	for (i = 0; i < x; i++) {
 		mvwaddch (img->win, y, i, ACS_HLINE);
@@ -62,7 +62,7 @@ void ResizeCURS_MOS_WINDOW (CURS_MOS *target, int new_height, int new_width) {
 
 int ResizeCURS_MOS (CURS_MOS *target, int new_height, int new_width) {
 	ResizeCURS_MOS_WINDOW (target, new_height, new_width);
-	return ResizeMOSAIC (&target->img, new_height, new_width);
+	return ResizeMOSAIC (target->img, new_height, new_width);
 }
 
 
@@ -71,9 +71,9 @@ void RefreshCURS_MOS (CURS_MOS *target) {
 	
 	// write in the WINDOW
 	int i, j;
-	for (i = 0; i < target->img.height; i++) {
-		for (j = 0; j < target->img.width; j++) {
-			mvwaddch (target->win, i, j, target->img.mosaic[i][j]);
+	for (i = 0; i < target->img->height; i++) {
+		for (j = 0; j < target->img->width; j++) {
+			mvwaddch (target->win, i, j, target->img->mosaic[i][j]);
 		}
 	}
 
@@ -83,12 +83,13 @@ void RefreshCURS_MOS (CURS_MOS *target) {
 
 int LoadCURS_MOS (CURS_MOS *target, const char *file_name) {
 	// load the MOSAIC, please
-	int aux = LoadMOSAIC (&target->img, file_name);
-	if (aux != 0)
+	int aux = LoadMOSAIC (target->img, file_name);
+	if (aux != 0) {
 		return aux;
+	}
 
 	// resize only target's WINDOW, as the MOSAIC was resized on LoadMOSAIC
-	ResizeCURS_MOS_WINDOW (target, target->img.height, target->img.width);
+	ResizeCURS_MOS_WINDOW (target, target->img->height, target->img->width);
 	// refreshing
 	RefreshCURS_MOS (target);
 
@@ -119,7 +120,7 @@ void LinkCURS_MOS (CURS_MOS *dest, CURS_MOS *src, enum direction dir) {
 
 
 int curs_mosAddch (CURS_MOS *image, int y, int x, int c) {
-	if (!mosAddch (&image->img, y, x, c)) {
+	if (!mosAddch (image->img, y, x, c)) {
 		return ERR;
 	}
 
@@ -137,7 +138,7 @@ void DisplayCurrentMOSAIC (CURS_MOS *current) {
 
 
 void FreeCURS_MOS (CURS_MOS *image) {
-	FreeMOSAIC (&image->img);
+	FreeMOSAIC (image->img);
 	del_panel (image->pan);
 	delwin (image->win);
 	free (image);

@@ -16,7 +16,7 @@
  * as we like to call it] and Curses interface.
  */
 typedef struct CURS_MOS_t {
-	MOSAIC img;	///< the asc art itself
+	MOSAIC *img;	///< the asc art itself
 	int y,		///< the Y coordinate of the piece of @ref img showed at the pad
 		x;		///< the Y coordinate of the piece of @ref img showed at the pad
 	struct CURS_MOS_t *prev,	///< previous CURS_MOS

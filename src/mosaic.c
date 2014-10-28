@@ -15,18 +15,35 @@ inline int MOSAICSize (MOSAIC img) {
 }
 
 
-int NewMOSAIC (MOSAIC *img, int new_height, int new_width) {
+MOSAIC * NewMOSAIC (int new_height, int new_width) {
+	MOSAIC *img = (MOSAIC *) malloc (sizeof (MOSAIC));
+	if (img == NULL) {
+		return NULL;
+	}
 	// dimensions still 0
 	img->height = img->width = 0;
 	// NULL pointers, for realloc to work as a malloc
 	img->mosaic = img->attr = NULL;
 	
 	// alloc the dinamic stuff and fill it: something ResizeMOSAIC already does
-	return ResizeMOSAIC (img, new_height, new_width);
+	int value = ResizeMOSAIC (img, new_height, new_width);
+
+	// allocation failed
+	if (value) {
+		free (img);
+		return NULL;
+	}
+
+	return img;
 }
 
 
-int mosAddch (MOSAIC *img, int y, int x, int c) {
+MOSAIC * SubMOSAIC (MOSAIC *mos, int begin_y, int begin_x, int height, int width) {
+	return NULL;
+}
+
+
+int mosAddch (MOSAIC *img, int y, int x, mos_char c) {
 	if (y < 0 || y >= img->height || x < 0 || x >= img->width) {
 		return 0;
 	}
@@ -261,4 +278,5 @@ void FreeMOSAIC (MOSAIC *img) {
 	}
 	free (img->attr);
 	free (img->mosaic);
+	free (img);
 }

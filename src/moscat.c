@@ -70,7 +70,7 @@ static struct argp argp = { options, parse_opt, args_doc, doc };
 /* MOSCAT */
 
 /**
- * Prints the image at stdout, using 'puts's
+ * Prints the image at stdout, using `putchar`s
  *
  * @param[in] img The image to be displayed
  * @param[in] color Flag: display colors?
@@ -82,11 +82,13 @@ void printMOSAIC (MOSAIC *img, char color) {
 			if (color) {
 				Tcolor (img->attr[i][j]);
 			}
-			printf ("%c", img->mosaic[i][j]);
+			putchar (img->mosaic[i][j]);
 		}
 
 		putchar ('\n');
 	}
+	// Reset to default terminal color
+	Tcolor (Normal);
 }
 
 int main (int argc, char *argv[]) {
@@ -97,16 +99,20 @@ int main (int argc, char *argv[]) {
 	argp_parse (&argp, argc, argv, 0, 0, &arguments);
 
 	// image to be loaded
-	MOSAIC img;
-	NewMOSAIC (&img, 0, 0);
-	int load_result = LoadMOSAIC (&img, arguments.input);
+	MOSAIC *img = NewMOSAIC (0, 0);
+	if (!img) {
+		exit (1);
+	}
+
+	int load_result = LoadMOSAIC (img, arguments.input);
+
 	if (!load_result) {
 		if (arguments.dimensions) {
-			printf ("%dx%d\n", img.height, img.width);
+			printf ("%dx%d\n", img->height, img->width);
 		}
 
 		// print the image at stdout
-		printMOSAIC (&img, arguments.color);
+		printMOSAIC (img, arguments.color);
 	}
 	else if (load_result == 1) {
 		fprintf (stderr, "There are no dimensions in this file... \
@@ -116,7 +122,7 @@ It's probably not a mosaic image!\n");
 		fprintf (stderr, "Couldn't load file. %s.\n", strerror (errno));
 	}
 
-	FreeMOSAIC (&img);
+	FreeMOSAIC (img);
 
 	return 0;
 }

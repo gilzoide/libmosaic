@@ -14,7 +14,7 @@
 typedef unsigned char mos_char;
 
 /**
- * "MOSAIC" in Nmos mosaic format
+ * "Image" in mosaic format
  */
 typedef struct {
 	int height;	///< img height
@@ -47,7 +47,7 @@ inline int MOSAICSize (MOSAIC img);
  * @return 1 on success
  * @return 0 on out of boundaries
  */
-int mosAddch (MOSAIC *img, int y, int x, int c);
+int mosAddch (MOSAIC *img, int y, int x, mos_char c);
 /**
  * Get the char at position y/x
  *
@@ -68,10 +68,26 @@ mos_char mosGetch (MOSAIC *img, int y, int x);
  * @param[in] new_height New MOSAIC's height
  * @param[in] new_width New MOSAIC's width
  * 
- * @return 0 on success
- * @return -1 if allocation failed
+ * @return A MOSAIC on success
+ * @return NULL if allocation failed
  */
-int NewMOSAIC (MOSAIC *img, int new_height, int new_width);
+MOSAIC * NewMOSAIC (int new_height, int new_width);
+/**
+ * Gets a MOSAIC inside a MOSAIC: MOSAICception!
+ *
+ * @note SubMOSAICs shares memory with it's relative MOSAIC, so
+ * changes affecting one MOSAIC will affect the other one.
+ *
+ * @param[in] mos 		The outer MOSAIC
+ * @param[in] begin_y 	The upper-left Y coordinate, where inner MOSAIC begins
+ * @param[in] begin_x 	The upper-left X coordinate, where inner MOSAIC begins
+ * @param[in] height	Inner MOSAIC's height
+ * @param[in] width		Inner MOSAIC's width
+ *
+ * @return SubMOSAIC
+ * @return NULL if mos is NULL, or if coordinates get out of bounds
+ */
+MOSAIC * SubMOSAIC (MOSAIC *mos, int begin_y, int begin_x, int height, int width);
 /**
  * Resize a @ref MOSAIC, reallocating the necessary memory
  * 
