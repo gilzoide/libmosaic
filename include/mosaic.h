@@ -32,7 +32,19 @@ typedef struct {
  * 
  * @return image size: height * width
  */
-inline int MOSAICSize (MOSAIC img);
+int MOSAICSize (MOSAIC *img);
+
+/**
+ * Checks whether a y/x point is in or out of img's boundaries
+ *
+ * @param[in] img Target MOSAIC
+ * @param[in] y Y coordinate
+ * @param[in] x X coordinate
+ *
+ * @return 1 if out of boundaries
+ * @return 0 otherwise
+ */
+char outOfBoundaries (MOSAIC *img, int y, int x);
 
 /**
  * Add a char to the MOSAIC at position y/x
@@ -49,6 +61,20 @@ inline int MOSAICSize (MOSAIC img);
  */
 int mosAddch (MOSAIC *img, int y, int x, mos_char c);
 /**
+ * Changes a MOSAIC's mos_char's Attr, at position y/x
+ * 
+ * @note If position is outside image boundaries, returns 0 
+ *
+ * @param[in] img Target MOSAIC
+ * @param[in] y Y coordinate
+ * @param[in] x X coordinate
+ * @param[in] a New char attribute
+ *
+ * @return 1 on success
+ * @return 0 on out of boundaries
+ */
+int mosSetAttr (MOSAIC *img, int y, int x, Attr a);
+/**
  * Get the char at position y/x
  *
  * @note If position is outside image boundaries, returns 0 
@@ -61,6 +87,20 @@ int mosAddch (MOSAIC *img, int y, int x, mos_char c);
  * @return 0 on out of boundaries
  */
 mos_char mosGetch (MOSAIC *img, int y, int x);
+/**
+ * Changes a MOSAIC's mos_char's Attr, at position y/x
+ * 
+ * @note If position is outside image boundaries, returns 0 
+ *
+ * @param[in] img Target MOSAIC
+ * @param[in] y Y coordinate
+ * @param[in] x X coordinate
+ * @param[in] a New char attribute
+ *
+ * @return the Attr
+ * @return Normal if out of Boundaries, as it's a default value
+ */
+Attr mosGetAttr (MOSAIC *img, int y, int x);
 /** 
  * Create a new @ref MOSAIC, allocating the necessary memory
  * 
@@ -78,7 +118,7 @@ MOSAIC * NewMOSAIC (int new_height, int new_width);
  * @note SubMOSAICs shares memory with it's relative MOSAIC, so
  * changes affecting one MOSAIC will affect the other one.
  *
- * @param[in] mos 		The outer MOSAIC
+ * @param[in] img 		The outer MOSAIC
  * @param[in] begin_y 	The upper-left Y coordinate, where inner MOSAIC begins
  * @param[in] begin_x 	The upper-left X coordinate, where inner MOSAIC begins
  * @param[in] height	Inner MOSAIC's height
@@ -87,7 +127,7 @@ MOSAIC * NewMOSAIC (int new_height, int new_width);
  * @return SubMOSAIC
  * @return NULL if mos is NULL, or if coordinates get out of bounds
  */
-MOSAIC * SubMOSAIC (MOSAIC *mos, int begin_y, int begin_x, int height, int width);
+MOSAIC * SubMOSAIC (MOSAIC *img, int begin_y, int begin_x, int height, int width);
 /**
  * Resize a @ref MOSAIC, reallocating the necessary memory
  * 

@@ -10,8 +10,13 @@ inline int min (int a, int b) {
 }
 
 
-inline int MOSAICSize (MOSAIC img) {
-	return img.height * img.width;
+char outOfBoundaries (MOSAIC *img, int y, int x) {
+	return (y < 0 || y >= img->height || x < 0 || x >= img->width);
+}
+
+
+int MOSAICSize (MOSAIC *img) {
+	return img->height * img->width;
 }
 
 
@@ -38,13 +43,13 @@ MOSAIC * NewMOSAIC (int new_height, int new_width) {
 }
 
 
-MOSAIC * SubMOSAIC (MOSAIC *mos, int begin_y, int begin_x, int height, int width) {
+MOSAIC * SubMOSAIC (MOSAIC *img, int begin_y, int begin_x, int height, int width) {
 	return NULL;
 }
 
 
 int mosAddch (MOSAIC *img, int y, int x, mos_char c) {
-	if (y < 0 || y >= img->height || x < 0 || x >= img->width) {
+	if (outOfBoundaries (img, y, x)) {
 		return 0;
 	}
 	else {
@@ -54,13 +59,35 @@ int mosAddch (MOSAIC *img, int y, int x, mos_char c) {
 }
 
 
+int mosSetAttr (MOSAIC *img, int y, int x, Attr a) {
+	if (outOfBoundaries (img, y, x)) {
+		return 0;
+	}
+	else {
+		img->attr[y][x] = a;
+		return 1;
+	}
+}
+
+
 mos_char mosGetch (MOSAIC *img, int y, int x) {
-	if (y < 0 || y >= img->height || x < 0 || x >= img->width) {
+	if (outOfBoundaries (img, y, x)) {
 		return 0;
 	}
 	else {
 		return img->mosaic[y][x];
 	}
+}
+
+
+Attr mosGetAttr (MOSAIC *img, int y, int x) {
+	if (outOfBoundaries (img, y, x)) {
+		return Normal;
+	}
+	else {
+		return img->attr[y][x];
+	}
+
 }
 
 
