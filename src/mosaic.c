@@ -111,25 +111,31 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	// Lines
 	// mosaic:
 	if ((img->mosaic = (mos_char**) realloc (
-		img->mosaic, new_height * sizeof (mos_char*))) == NULL)
+			img->mosaic, new_height * sizeof (mos_char*))) == NULL) {
 		return -1;
-	for (i = old_height; i < new_height; i++)
+	}
+	for (i = old_height; i < new_height; i++) {
 		img->mosaic[i] = NULL;
+	}
 	// attributes:
 	if ((img->attr = (Attr**) realloc (
-		img->attr, new_height * sizeof (Attr*))) == NULL)
+			img->attr, new_height * sizeof (Attr*))) == NULL) {
 		return -1;
-	for (i = old_height; i < new_height; i++)
+	}
+	for (i = old_height; i < new_height; i++) {
 		img->attr[i] = NULL;
+	}
 
 	// Columns
 	for (i = 0; i < new_height; i++) {
 		if ((img->mosaic[i] = (mos_char*) realloc (
-			img->mosaic[i], new_width * sizeof (mos_char))) == NULL)
+				img->mosaic[i], new_width * sizeof (mos_char))) == NULL) {
 			return -1;
+		}
 		if ((img->attr[i] = (Attr*) realloc (
-			img->attr[i], new_width * sizeof (Attr))) == NULL)
+				img->attr[i], new_width * sizeof (Attr))) == NULL) {
 			return -1;
+		}
 	}
 	
 	// maybe it grew, so complete with blanks
@@ -139,14 +145,14 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 		for (i = old_height; i < new_height; i++) {
 			for (j = 0; j < old_width; j++) {
 				img->mosaic[i][j] = ' ';
-				img->attr[i][j] = 0;
+				img->attr[i][j] = Normal;
 			}
 		}
 		// new columns, until old height
 		for (i = old_width; i < new_width; i++) {
 			for (j = 0; j < old_height; j++) {
 				img->mosaic[j][i] = ' ';
-				img->attr[j][i] = 0;
+				img->attr[j][i] = Normal;
 			}
 		}
 	}
@@ -156,7 +162,7 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	for (i = old_height; i < new_height; i++) {
 		for (j = old_width; j < new_width; j++) {
 			img->mosaic[i][j] = ' ';
-			img->attr[i][j] = 0;
+			img->attr[i][j] = Normal;
 		}
 	}
 
@@ -229,9 +235,13 @@ int SaveMOSAIC (MOSAIC *image, const char *file_name) {
 	// Mosaic
 	int i;
 	for (i = 0; i < image->height; i++) {
-		fprintf (f, "%.*s\n", image->width, (image->mosaic[i]));
+		fprintf (f, "%.*s\n", image->width, image->mosaic[i]);
 	}
+	fputc (SEPARATOR, f);
 	// Attr
+	for (i = 0; i < image->height; i++) {
+		fwrite (image->attr[i], sizeof (Attr), image->width, f);
+	}
 	
 	fclose (f);
 
@@ -262,7 +272,8 @@ int LoadMOSAIC (MOSAIC *image, const char *file_name) {
 	for (i = 0; i < image->height; i++) {
 		// read the line until the end or no more width is available
 		for (j = 0; j < image->width; j++) {
-			if ((c = fgetc (f)) == EOF)
+			c = fgetc (f);
+			if (c == EOF || c == SEPARATOR)
 				// used so won't need a flag or more comparisons
 				// to break both the fors
 				goto FILL_WITH_BLANK;
@@ -284,13 +295,25 @@ int LoadMOSAIC (MOSAIC *image, const char *file_name) {
 	}
 	
 FILL_WITH_BLANK:
-	// well, maybe we reached EOF, so everything else is a blank...
+	// well, maybe we reached EOF or SEPARATOR, so everything else is a blank...
 	for ( ; i < image->height; i++) {
 		for (j = 0;  j < image->width; j++) {
 			image->mosaic[i][j] = ' ';
 		}
 	}
-	
+
+	if (c != EOF) {
+		// jump to the SEPARATOR, if it exists
+		while (c != SEPARATOR && c != EOF) {
+			c = fgetc (f);
+		}
+		// Time for some Attributes! (color/bold)
+		size_t check = image->width;
+		for (i = 0; check == image->width && i < image->width; i++) {
+			check = fread (image->attr[i], sizeof (Attr), image->width, f);
+		}
+	}
+
 	fclose (f);
 
 	return 0;

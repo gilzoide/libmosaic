@@ -16,12 +16,30 @@
 typedef unsigned char Attr;
 #define BOLD 0b10000000		///< Bold mask
 
+/**
+ *  Extracts the Bold mask from a Attr
+ *
+ * @param[in] attr Target Attr
+ *
+ * @return BOLD if Bold is on
+ * @return 0 otherwise
+ */
+Attr extractBold (Attr *attr);
+/**
+ * Converts between Attr and the Curses attr_t.
+ *
+ * This way you can `attron` with the Attr without
+ * worrying about how it works =P
+ */
+attr_t CursAttr (Attr a);
+
 /// Initialize all color combinations in Curses
 void InitColors ();
 /// A simple test of the color definitions, with Curses as output
 void TestColors_Curses ();
 /// A simple test of the color definitions, with stdout as output
 void TestColors_Stdout ();
+
 
 /**
  * Color definitions
@@ -124,6 +142,12 @@ enum colors {
 	WC, 	///< White-Cyan
 	WW 		///< White-White
 };
+
+/// Number of colors
+#define MAX_COLORS (WW + 1)
+/// The step of the colors' agrouping. Color + COLORS_STEP gets
+/// a color with the the same background, but the next foreground
+#define COLORS_STEP BkN
 
 /**
  * Change the color printed at stdout

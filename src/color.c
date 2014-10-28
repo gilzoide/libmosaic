@@ -1,6 +1,26 @@
 #include <string.h>
 #include "color.h"
 
+Attr extractBold (Attr *attr) {
+	// check if it was bold
+	Attr bold = *attr & BOLD;
+
+	// de-bolderize it
+	*attr &= ~BOLD;
+
+	return bold;
+}
+
+
+attr_t CursAttr (Attr a) {
+	Attr bold = extractBold (&a);
+
+	attr_t value = bold ? A_BOLD : A_NORMAL;
+
+	return (value | COLOR_PAIR (a));
+}
+
+
 void InitColors () {
 	assume_default_colors (-1, -1);	// there's the default terminal color (Normal, in the colors enum)
 	// normal
@@ -146,17 +166,16 @@ void TestColors_Stdout () {
 	}
 }
 
+
 void Tcolor (Attr color) {
 	char *fg_color_table[] = {"39", "30", "31", "32", "33", "34", "35", "36", "37"};
 	char *bg_color_table[] = {"49", "40", "41", "42", "43", "44", "45", "46", "47"};
 	char aux[] = "\e[  m\e[  m";
 
 	// they told me it may be bold
-	if (color & BOLD) {
+	if (extractBold (&color)) {
 		// tell the terminal it's bold
 		strcat (aux, "\e[1m");
-		// and leave the rest to the color
-		color ^= BOLD;
 	}
 
 	aux[2] = fg_color_table[color / 9][0];

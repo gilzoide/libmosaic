@@ -110,13 +110,20 @@ void LinkCURS_MOS (CURS_MOS *dest, CURS_MOS *src, enum direction dir);
  * 
  * @note It doesn't refresh the WINDOW, so do it yourself whenever you feel ready
  * 
- * If position is outside image boundaries, returns ERR, as it calls mvwaddch, which calls wmove internally
- * 
  * @return 0 on success
  * @return ERR on error
  */
 int curs_mosAddch (CURS_MOS *image, int y, int x, int c);
 
+/**
+ * Set a char's attr at position y/x and update it's WINDOW.
+ *
+ * @note It doesn't refresh the WINDOW, so do it yourself whenever you feel ready
+ * 
+ * @return 0 on success
+ * @return ERR on error
+ */
+int curs_mosSetAttr (CURS_MOS *image, int y, int x, Attr a);
 /**
  * Displays current CURS_MOS in the stdscr
  * 

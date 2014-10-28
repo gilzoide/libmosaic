@@ -23,6 +23,8 @@ typedef struct {
 	Attr **attr;	/**< a height * width sized array with the attributes for each char. */
 } MOSAIC;
 
+/// Mosi text/binary separator
+#define SEPARATOR 31
 
 
 /**

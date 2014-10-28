@@ -73,9 +73,12 @@ void RefreshCURS_MOS (CURS_MOS *target) {
 	int i, j;
 	for (i = 0; i < target->img->height; i++) {
 		for (j = 0; j < target->img->width; j++) {
+			wattrset (target->win, CursAttr (target->img->attr[i][j]));
 			mvwaddch (target->win, i, j, target->img->mosaic[i][j]);
 		}
 	}
+
+	wstandend (target->win);
 
 	prefresh (target->win, target->y, target->x, 0, 0, LINES - 2, COLS - 1);
 }
@@ -124,7 +127,21 @@ int curs_mosAddch (CURS_MOS *image, int y, int x, int c) {
 		return ERR;
 	}
 
+	wattron (image->win, CursAttr (image->img->attr[y][x]));
 	mvwaddch (image->win, y, x, c);
+	wstandend (image->win);
+	return 0;
+}
+
+
+int curs_mosSetAttr (CURS_MOS *image, int y, int x, Attr a) {
+	if (!mosSetAttr (image->img, y, x, a)) {
+		return ERR;
+	}
+
+	int bold = extractBold (&a);
+
+	mvwchgat (image->win, y, x, 1, bold ? A_BOLD : A_NORMAL, a, NULL);
 	return 0;
 }
 
