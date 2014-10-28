@@ -79,8 +79,9 @@ void printMOSAIC (MOSAIC *img, char color) {
 	int i, j;
 	for (i = 0; i < img->height; i++) {
 		for (j = 0; j < img->width; j++) {
-			if (color)
+			if (color) {
 				Tcolor (img->attr[i][j]);
+			}
 			printf ("%c", img->mosaic[i][j]);
 		}
 
@@ -99,21 +100,21 @@ int main (int argc, char *argv[]) {
 	MOSAIC img;
 	NewMOSAIC (&img, 0, 0);
 	int load_result = LoadMOSAIC (&img, arguments.input);
-	if (load_result == errno) {
-		fprintf (stderr, "Couldn't load file. %s.\n", strerror (errno));
-		return 0;
+	if (!load_result) {
+		if (arguments.dimensions) {
+			printf ("%dx%d\n", img.height, img.width);
+		}
+
+		// print the image at stdout
+		printMOSAIC (&img, arguments.color);
 	}
 	else if (load_result == 1) {
 		fprintf (stderr, "There are no dimensions in this file... \
 It's probably not a mosaic image!\n");
-		return 0;
 	}
-	
-	if (arguments.dimensions)
-		printf ("%dx%d\n", img.height, img.width);
-
-	// print the image at stdout
-	printMOSAIC (&img, arguments.color);
+	else {
+		fprintf (stderr, "Couldn't load file. %s.\n", strerror (errno));
+	}
 
 	FreeMOSAIC (&img);
 
