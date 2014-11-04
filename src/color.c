@@ -12,6 +12,7 @@ Attr extractBold (Attr *attr) {
 }
 
 
+#ifdef MOSAIC_USE_CURSES
 attr_t CursAttr (Attr a) {
 	Attr bold = extractBold (&a);
 
@@ -140,7 +141,7 @@ void TestColors_Curses () {
 		refresh ();
 	}
 }
-
+#endif
 
 void TestColors_Stdout () {
 	int i;

@@ -21,6 +21,7 @@ typedef struct {
 	int	width;	///< img width
 	mos_char **mosaic;		/**< a height * width sized string: the drawing itself */
 	Attr **attr;	/**< a height * width sized array with the attributes for each char. */
+	unsigned char isSub : 2;
 } MOSAIC;
 
 /// Mosi text/binary separator
@@ -120,16 +121,16 @@ MOSAIC * NewMOSAIC (int new_height, int new_width);
  * @note SubMOSAICs shares memory with it's relative MOSAIC, so
  * changes affecting one MOSAIC will affect the other one.
  *
- * @param[in] img 		The outer MOSAIC
+ * @param[in] parent	The outter MOSAIC
  * @param[in] begin_y 	The upper-left Y coordinate, where inner MOSAIC begins
  * @param[in] begin_x 	The upper-left X coordinate, where inner MOSAIC begins
  * @param[in] height	Inner MOSAIC's height
  * @param[in] width		Inner MOSAIC's width
  *
  * @return SubMOSAIC
- * @return NULL if mos is NULL, or if coordinates get out of bounds
+ * @return NULL if img is NULL, or if coordinates get out of bounds
  */
-MOSAIC * SubMOSAIC (MOSAIC *img, int begin_y, int begin_x, int height, int width);
+MOSAIC * SubMOSAIC (MOSAIC *parent, int begin_y, int begin_x, int height, int width);
 /**
  * Resize a @ref MOSAIC, reallocating the necessary memory
  * 

@@ -5,7 +5,7 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include <curses.h>
+#include <stdio.h>
 
 /**
  * Attribute used by Mosaic.
@@ -25,6 +25,10 @@ typedef unsigned char Attr;
  * @return 0 otherwise
  */
 Attr extractBold (Attr *attr);
+
+// Curses support
+#ifdef MOSAIC_USE_CURSES
+#include <curses.h>
 /**
  * Converts between Attr and the Curses attr_t.
  *
@@ -37,6 +41,8 @@ attr_t CursAttr (Attr a);
 void InitColors ();
 /// A simple test of the color definitions, with Curses as output
 void TestColors_Curses ();
+#endif
+
 /// A simple test of the color definitions, with stdout as output
 void TestColors_Stdout ();
 

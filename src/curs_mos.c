@@ -18,7 +18,7 @@ CURS_MOS *NewCURS_MOS (int new_height, int new_width) {
 	CURS_MOS *new_image;
 	if ((new_image = (CURS_MOS*) malloc (sizeof (CURS_MOS))) == NULL)
 		return NULL;
-	
+
 	new_image->img = NewMOSAIC (new_height, new_width);
 
 	// create the curses window and panel
@@ -27,7 +27,7 @@ CURS_MOS *NewCURS_MOS (int new_height, int new_width) {
 
 	new_image->y = new_image->x = 0;
 	scrollok (new_image->win, TRUE);
-	
+
 	new_image->pan = new_panel (new_image->win);
 	DisplayCurrentMOSAIC (new_image);
 

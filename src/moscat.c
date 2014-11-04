@@ -85,10 +85,10 @@ void printMOSAIC (MOSAIC *img, char color) {
 			putchar (img->mosaic[i][j]);
 		}
 
+		// Reset to default terminal color
+		Tcolor (Normal);
 		putchar ('\n');
 	}
-	// Reset to default terminal color
-	Tcolor (Normal);
 }
 
 int main (int argc, char *argv[]) {

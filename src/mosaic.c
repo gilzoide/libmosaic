@@ -29,6 +29,8 @@ MOSAIC * NewMOSAIC (int new_height, int new_width) {
 	img->height = img->width = 0;
 	// NULL pointers, for realloc to work as a malloc
 	img->mosaic = img->attr = NULL;
+	// it's not a subMOSAIC
+	img->isSub = 0;
 	
 	// alloc the dinamic stuff and fill it: something ResizeMOSAIC already does
 	int value = ResizeMOSAIC (img, new_height, new_width);
@@ -43,8 +45,40 @@ MOSAIC * NewMOSAIC (int new_height, int new_width) {
 }
 
 
-MOSAIC * SubMOSAIC (MOSAIC *img, int begin_y, int begin_x, int height, int width) {
-	return NULL;
+MOSAIC * SubMOSAIC (MOSAIC *parent, int begin_y, int begin_x, int height, int width) {
+	MOSAIC *img = (MOSAIC *) malloc (sizeof (MOSAIC));
+	if (img == NULL) {
+		return NULL;
+	}
+
+	img->height = height;
+	img->width = width;
+	img->isSub = 1;	// hello, i'm a subMOSAIC
+
+	// allocate just the lines
+	// mosaic
+	img->mosaic = (mos_char **) malloc (height * sizeof (mos_char *));
+	if (img->mosaic == NULL) {
+		free (img);
+		return NULL;
+	}
+	// attr
+	img->attr = (Attr **) malloc (height * sizeof (Attr *));
+	if (img->attr == NULL) {
+		free (img->mosaic);
+		free (img);
+		return NULL;
+	}
+
+	// now make mosaic/attr point to the parent MOSAIC at the right closure
+	int i;
+	for (i = 0; i < height; i++) {
+		// using pointer arithmetics, cuz it's cool
+		img->mosaic[i] = parent->mosaic[begin_y + i] + begin_x;
+		img->attr[i] = parent->attr[begin_y + i] + begin_x;
+	}
+
+	return img;
 }
 
 
@@ -60,32 +94,32 @@ int mosAddch (MOSAIC *img, int y, int x, mos_char c) {
 
 
 int mosSetAttr (MOSAIC *img, int y, int x, Attr a) {
-	if (outOfBoundaries (img, y, x)) {
-		return 0;
-	}
-	else {
+	if (!outOfBoundaries (img, y, x)) {
 		img->attr[y][x] = a;
 		return 1;
+	}
+	else {
+		return 0;
 	}
 }
 
 
 mos_char mosGetch (MOSAIC *img, int y, int x) {
-	if (outOfBoundaries (img, y, x)) {
-		return 0;
+	if (!outOfBoundaries (img, y, x)) {
+		return img->mosaic[y][x];
 	}
 	else {
-		return img->mosaic[y][x];
+		return 0;
 	}
 }
 
 
 Attr mosGetAttr (MOSAIC *img, int y, int x) {
-	if (outOfBoundaries (img, y, x)) {
-		return Normal;
+	if (!outOfBoundaries (img, y, x)) {
+		return img->attr[y][x];
 	}
 	else {
-		return img->attr[y][x];
+		return Normal;
 	}
 
 }
@@ -114,6 +148,7 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 			img->mosaic, new_height * sizeof (mos_char*))) == NULL) {
 		return -1;
 	}
+	// when growing, initialize lines with NULL, so realloc mallocs them
 	for (i = old_height; i < new_height; i++) {
 		img->mosaic[i] = NULL;
 	}
@@ -122,6 +157,7 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 			img->attr, new_height * sizeof (Attr*))) == NULL) {
 		return -1;
 	}
+	// when growing, initialize lines with NULL, so realloc mallocs them
 	for (i = old_height; i < new_height; i++) {
 		img->attr[i] = NULL;
 	}
@@ -227,8 +263,9 @@ void TrimMOSAIC (MOSAIC *target, char resize) {
 
 int SaveMOSAIC (MOSAIC *image, const char *file_name) {
 	FILE *f;
-	if ((f = fopen (file_name, "w")) == NULL)
+	if ((f = fopen (file_name, "w")) == NULL) {
 		return errno;
+	}
 
 	fprintf (f, "%dx%d\n", image->height, image->width);
 	
@@ -251,8 +288,9 @@ int SaveMOSAIC (MOSAIC *image, const char *file_name) {
 
 int LoadMOSAIC (MOSAIC *image, const char *file_name) {
 	FILE *f;
-	if ((f = fopen (file_name, "r")) == NULL)
+	if ((f = fopen (file_name, "r")) == NULL) {
 		return errno;
+	}
 	
 	int new_height, new_width;
 	if (!fscanf (f, "%3dx%3d", &new_height, &new_width)) {
@@ -273,13 +311,15 @@ int LoadMOSAIC (MOSAIC *image, const char *file_name) {
 		// read the line until the end or no more width is available
 		for (j = 0; j < image->width; j++) {
 			c = fgetc (f);
-			if (c == EOF || c == SEPARATOR)
+			if (c == EOF || c == SEPARATOR) {
 				// used so won't need a flag or more comparisons
 				// to break both the fors
 				goto FILL_WITH_BLANK;
+			}
 			// if it reached newline before width...
-			else if (c == '\n')
+			else if (c == '\n') {
 				break;
+			}
 			image->mosaic[i][j] = c;
 		}
 		// ...complete with whitespaces
@@ -288,10 +328,12 @@ int LoadMOSAIC (MOSAIC *image, const char *file_name) {
 		}
 		
 		// we read the whole line, but the tailing '\n', we need to discard it
-		if (c != '\n')
+		if (c != '\n') {
 			// may happen it's not a newline yet, so let's reread it =P
-			if ((c = fgetc (f)) != '\n')
+			if ((c = fgetc (f)) != '\n') {
 				ungetc (c, f);
+			}
+		}
 	}
 	
 FILL_WITH_BLANK:
@@ -321,12 +363,18 @@ FILL_WITH_BLANK:
 
 
 void FreeMOSAIC (MOSAIC *img) {
-	int i;
-	for (i = 0; i < img->height; i++) {
-		free (img->attr[i]);
-		free (img->mosaic[i]);
+	// only free the mosaic/attr if img is an 
+	// independent MOSAIC (not a subMOSAIC)
+	if (!img->isSub) {
+		int i;
+		for (i = 0; i < img->height; i++) {
+			free (img->attr[i]);
+			free (img->mosaic[i]);
+		}
 	}
+
 	free (img->attr);
 	free (img->mosaic);
+
 	free (img);
 }
