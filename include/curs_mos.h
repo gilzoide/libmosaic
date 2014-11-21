@@ -123,7 +123,7 @@ int curs_mosAddch (CURS_MOS *image, int y, int x, int c);
  * @return 0 on success
  * @return ERR on error
  */
-int curs_mosSetAttr (CURS_MOS *image, int y, int x, Attr a);
+int curs_mosSetAttr (CURS_MOS *image, int y, int x, mos_attr a);
 /**
  * Displays current CURS_MOS in the stdscr
  * 

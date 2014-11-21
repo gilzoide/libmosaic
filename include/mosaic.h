@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+
 #include "color.h"
 
 /// Char representation inside MOSAIC
@@ -20,7 +21,7 @@ typedef struct {
 	int height;	///< img height
 	int	width;	///< img width
 	mos_char **mosaic;		/**< a height * width sized string: the drawing itself */
-	Attr **attr;	/**< a height * width sized array with the attributes for each char. */
+	mos_attr **attr;	/**< a height * width sized array with the attributes for each char. */
 	unsigned char isSub : 2;
 } MOSAIC;
 
@@ -64,7 +65,7 @@ char outOfBoundaries (MOSAIC *img, int y, int x);
  */
 int mosAddch (MOSAIC *img, int y, int x, mos_char c);
 /**
- * Changes a MOSAIC's mos_char's Attr, at position y/x
+ * Changes a MOSAIC's mos_char's mos_attr, at position y/x
  * 
  * @note If position is outside image boundaries, returns 0 
  *
@@ -76,7 +77,7 @@ int mosAddch (MOSAIC *img, int y, int x, mos_char c);
  * @return 1 on success
  * @return 0 on out of boundaries
  */
-int mosSetAttr (MOSAIC *img, int y, int x, Attr a);
+int mosSetAttr (MOSAIC *img, int y, int x, mos_attr a);
 /**
  * Get the char at position y/x
  *
@@ -91,7 +92,7 @@ int mosSetAttr (MOSAIC *img, int y, int x, Attr a);
  */
 mos_char mosGetch (MOSAIC *img, int y, int x);
 /**
- * Changes a MOSAIC's mos_char's Attr, at position y/x
+ * Changes a MOSAIC's mos_char's mos_attr, at position y/x
  * 
  * @note If position is outside image boundaries, returns 0 
  *
@@ -100,10 +101,10 @@ mos_char mosGetch (MOSAIC *img, int y, int x);
  * @param[in] x X coordinate
  * @param[in] a New char attribute
  *
- * @return the Attr
+ * @return the mos_attr
  * @return Normal if out of Boundaries, as it's a default value
  */
-Attr mosGetAttr (MOSAIC *img, int y, int x);
+mos_attr mosGetAttr (MOSAIC *img, int y, int x);
 /** 
  * Create a new @ref MOSAIC, allocating the necessary memory
  * 

@@ -1,9 +1,9 @@
 #include <string.h>
 #include "color.h"
 
-Attr extractBold (Attr *attr) {
+mos_attr extractBold (mos_attr *attr) {
 	// check if it was bold
-	Attr bold = *attr & BOLD;
+	mos_attr bold = *attr & BOLD;
 
 	// de-bolderize it
 	*attr &= ~BOLD;
@@ -12,9 +12,8 @@ Attr extractBold (Attr *attr) {
 }
 
 
-#ifdef MOSAIC_USE_CURSES
-attr_t CursAttr (Attr a) {
-	Attr bold = extractBold (&a);
+attr_t CursAttr (mos_attr a) {
+	mos_attr bold = extractBold (&a);
 
 	attr_t value = bold ? A_BOLD : A_NORMAL;
 
@@ -141,7 +140,7 @@ void TestColors_Curses () {
 		refresh ();
 	}
 }
-#endif
+
 
 void TestColors_Stdout () {
 	int i;
@@ -168,7 +167,7 @@ void TestColors_Stdout () {
 }
 
 
-void Tcolor (Attr color) {
+void Tcolor (mos_attr color) {
 	char *fg_color_table[] = {"39", "30", "31", "32", "33", "34", "35", "36", "37"};
 	char *bg_color_table[] = {"49", "40", "41", "42", "43", "44", "45", "46", "47"};
 	char aux[] = "\e[  m\e[  m";

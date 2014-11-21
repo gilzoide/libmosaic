@@ -16,8 +16,9 @@ void CircularIMGS (IMGS *imgs, CURS_MOS *mos) {
 CURS_MOS *NewCURS_MOS (int new_height, int new_width) {
 	// create new CURS_MOS
 	CURS_MOS *new_image;
-	if ((new_image = (CURS_MOS*) malloc (sizeof (CURS_MOS))) == NULL)
+	if ((new_image = (CURS_MOS*) malloc (sizeof (CURS_MOS))) == NULL) {
 		return NULL;
+	}
 
 	new_image->img = NewMOSAIC (new_height, new_width);
 
@@ -134,7 +135,7 @@ int curs_mosAddch (CURS_MOS *image, int y, int x, int c) {
 }
 
 
-int curs_mosSetAttr (CURS_MOS *image, int y, int x, Attr a) {
+int curs_mosSetAttr (CURS_MOS *image, int y, int x, mos_attr a) {
 	if (!mosSetAttr (image->img, y, x, a)) {
 		return ERR;
 	}

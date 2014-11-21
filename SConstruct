@@ -36,7 +36,7 @@ if not GetOption ('help'):
     instHeaders = ['/usr/include/mosaic/' + h for h in headers]
 
     curs_env = env.Clone (LIBS = ['panel', 'curses'], LIBPATH = ['/usr/lib', 
-            '/usr/local/lib'], CCFLAGS = ['-DMOSAIC_USE_CURSES'])
+            '/usr/local/lib'])
 
     # moscat needs mosaic{,_color}, so link with it as a shared library
     cat_env = env.Clone (LIBS = ['mosaic', 'mosaic_color'], LIBPATH = '#build')

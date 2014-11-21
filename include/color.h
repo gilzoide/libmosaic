@@ -5,7 +5,7 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include <stdio.h>
+#include <curses.h>
 
 /**
  * Attribute used by Mosaic.
@@ -13,35 +13,31 @@
  * It's bits are masked, from most to less significative as the color 
  * (7 bits), bold (1 bit on/off).
  */
-typedef unsigned char Attr;
+typedef unsigned char mos_attr;
 #define BOLD 0b10000000		///< Bold mask
 
 /**
- *  Extracts the Bold mask from a Attr
+ *  Extracts the Bold mask from a mos_attr
  *
  * @param[in] attr Target Attr
  *
  * @return BOLD if Bold is on
  * @return 0 otherwise
  */
-Attr extractBold (Attr *attr);
+mos_attr extractBold (mos_attr *attr);
 
-// Curses support
-#ifdef MOSAIC_USE_CURSES
-#include <curses.h>
 /**
  * Converts between Attr and the Curses attr_t.
  *
  * This way you can `attron` with the Attr without
  * worrying about how it works =P
  */
-attr_t CursAttr (Attr a);
+attr_t CursAttr (mos_attr a);
 
 /// Initialize all color combinations in Curses
 void InitColors ();
 /// A simple test of the color definitions, with Curses as output
 void TestColors_Curses ();
-#endif
 
 /// A simple test of the color definitions, with stdout as output
 void TestColors_Stdout ();
@@ -158,6 +154,6 @@ enum colors {
 /**
  * Change the color printed at stdout
  */
-void Tcolor (Attr color);
+void Tcolor (mos_attr color);
 
 #endif

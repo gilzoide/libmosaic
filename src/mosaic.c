@@ -63,7 +63,7 @@ MOSAIC * SubMOSAIC (MOSAIC *parent, int begin_y, int begin_x, int height, int wi
 		return NULL;
 	}
 	// attr
-	img->attr = (Attr **) malloc (height * sizeof (Attr *));
+	img->attr = (mos_attr **) malloc (height * sizeof (mos_attr *));
 	if (img->attr == NULL) {
 		free (img->mosaic);
 		free (img);
@@ -93,7 +93,7 @@ int mosAddch (MOSAIC *img, int y, int x, mos_char c) {
 }
 
 
-int mosSetAttr (MOSAIC *img, int y, int x, Attr a) {
+int mosSetAttr (MOSAIC *img, int y, int x, mos_attr a) {
 	if (!outOfBoundaries (img, y, x)) {
 		img->attr[y][x] = a;
 		return 1;
@@ -114,7 +114,7 @@ mos_char mosGetch (MOSAIC *img, int y, int x) {
 }
 
 
-Attr mosGetAttr (MOSAIC *img, int y, int x) {
+mos_attr mosGetAttr (MOSAIC *img, int y, int x) {
 	if (!outOfBoundaries (img, y, x)) {
 		return img->attr[y][x];
 	}
@@ -153,8 +153,8 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 		img->mosaic[i] = NULL;
 	}
 	// attributes:
-	if ((img->attr = (Attr**) realloc (
-			img->attr, new_height * sizeof (Attr*))) == NULL) {
+	if ((img->attr = (mos_attr**) realloc (
+			img->attr, new_height * sizeof (mos_attr*))) == NULL) {
 		return -1;
 	}
 	// when growing, initialize lines with NULL, so realloc mallocs them
@@ -168,8 +168,8 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 				img->mosaic[i], new_width * sizeof (mos_char))) == NULL) {
 			return -1;
 		}
-		if ((img->attr[i] = (Attr*) realloc (
-				img->attr[i], new_width * sizeof (Attr))) == NULL) {
+		if ((img->attr[i] = (mos_attr*) realloc (
+				img->attr[i], new_width * sizeof (mos_attr))) == NULL) {
 			return -1;
 		}
 	}
@@ -277,7 +277,7 @@ int SaveMOSAIC (MOSAIC *image, const char *file_name) {
 	fputc (SEPARATOR, f);
 	// Attr
 	for (i = 0; i < image->height; i++) {
-		fwrite (image->attr[i], sizeof (Attr), image->width, f);
+		fwrite (image->attr[i], sizeof (mos_attr), image->width, f);
 	}
 	
 	fclose (f);
@@ -352,7 +352,7 @@ FILL_WITH_BLANK:
 		// Time for some Attributes! (color/bold)
 		size_t check = image->width;
 		for (i = 0; check == image->width && i < image->width; i++) {
-			check = fread (image->attr[i], sizeof (Attr), image->width, f);
+			check = fread (image->attr[i], sizeof (mos_attr), image->width, f);
 		}
 	}
 
