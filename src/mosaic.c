@@ -225,7 +225,7 @@ int CopyMOSAIC (MOSAIC *dest, MOSAIC *src) {
 }
 
 
-void TrimMOSAIC (MOSAIC *target, char resize) {
+int TrimMOSAIC (MOSAIC *target, char resize) {
 	// Rectangle containing the mosaic without blank lines/columns
 	int ULy, ULx, BRy, BRx;
 	BRy = BRx = 0;
@@ -256,8 +256,10 @@ void TrimMOSAIC (MOSAIC *target, char resize) {
 	// we already moved the mosaic to (0,0), so if 
 	// asked to resize, just do it and we won't lose any data
 	if (resize) {
-		ResizeMOSAIC (target, BRy - ULy, BRx - ULx);
+		return ResizeMOSAIC (target, BRy - ULy + 1, BRx - ULx + 1);
 	}
+
+	return 0;
 }
 
 

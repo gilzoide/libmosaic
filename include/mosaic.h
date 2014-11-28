@@ -122,6 +122,9 @@ MOSAIC * NewMOSAIC (int new_height, int new_width);
  * @note SubMOSAICs shares memory with it's relative MOSAIC, so
  * changes affecting one MOSAIC will affect the other one.
  *
+ * @note Freeing a SubMOSAIC before or after it's relative doesn't make a
+ * difference, as the actual content will be freed only from the relative MOSAIC
+ *
  * @param[in] parent	The outter MOSAIC
  * @param[in] begin_y 	The upper-left Y coordinate, where inner MOSAIC begins
  * @param[in] begin_x 	The upper-left X coordinate, where inner MOSAIC begins
@@ -166,8 +169,11 @@ int CopyMOSAIC (MOSAIC *dest, MOSAIC *src);
  *
  * @param[in] target Target MOSAIC
  * @param[in] resize Bool: sould we resize the mosaic?
+ *
+ * @return The return from ResizeMOSAIC if resizing
+ * @return 0 otherwise (it'll never go wrong if not resizing and used wisely)
  */
-void TrimMOSAIC (MOSAIC *target, char resize);
+int TrimMOSAIC (MOSAIC *target, char resize);
 
 /**
  * Saves the image in a file

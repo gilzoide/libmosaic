@@ -67,6 +67,16 @@ int ResizeCURS_MOS (CURS_MOS *target, int new_height, int new_width) {
 }
 
 
+int TrimCURS_MOS (CURS_MOS *target, char resize) {
+	int aux = TrimMOSAIC (target->img, resize);
+	// if TrimMOSAIC returns no errors and needs to resize, do it!
+	if (!aux && resize) {
+		ResizeCURS_MOS_WINDOW (target, target->img->height, target->img->width);
+	}
+	return aux;
+}
+
+
 void RefreshCURS_MOS (CURS_MOS *target) {
 	wmove (target->win, 0, 0);
 	

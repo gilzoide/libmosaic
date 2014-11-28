@@ -7,6 +7,7 @@
 
 #include <curses.h>
 #include <panel.h>
+
 #include "mosaic.h"
 
 /**
@@ -80,6 +81,21 @@ int ResizeCURS_MOS (CURS_MOS *target, int new_height, int new_width);
  * @param[in] new_width CURS_MOS' new width
  */
 void ResizeCURS_MOS_WINDOW (CURS_MOS *target, int new_height, int new_width);
+/**
+ * Trims a MOSAIC's blank area in each side of target
+ *
+ * @note You can ask TrimMOSAIC to resize your image, doing so for it's WINDOW
+ * aswell. It's expensive to do so, so think carefully about it. If not 
+ * resizing, it'll just shift the image, as if you cut the rectangle with 
+ * the mosaic and pasted it at (0,0). 
+ *
+ * @param[in] target Target MOSAIC
+ * @param[in] resize Bool: sould we resize the mosaic?
+ *
+ * @return The return from ResizeCURS_MOS if resizing
+ * @return 0 otherwise
+ */
+int TrimCURS_MOS (CURS_MOS *target, char resize);
 /**
  * Loads a @ref CURS_MOS from file.
  *
