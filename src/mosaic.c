@@ -236,7 +236,7 @@ int TrimMOSAIC (MOSAIC *target, char resize) {
 	for (i = 0; i < target->height; i++) {
 		for (j = 0; j < target->width; j++) {
 			// it's not a blank, so update our rectangle
-			if (mosGetch (target, i, j) != ' ') {
+			if (target->mosaic[i][j] != ' ') {
 				ULy = min (ULy, i);
 				ULx = min (ULx, j);
 				BRy = max (BRy, i);
@@ -244,6 +244,13 @@ int TrimMOSAIC (MOSAIC *target, char resize) {
 			}
 		}
 	}
+
+	// asked for a resize, but the entire mosaic is a blank
+	// you kidding with me, right?
+	if (resize && ULy > BRy) {
+		return ERR;
+	}
+
 	// move the data from mosaic[src_y][src_x] to mosaic[i][j]
 	int src_x, src_y;
 	for (src_y = ULy, i = 0; src_y <= BRy; src_y++, i++) {

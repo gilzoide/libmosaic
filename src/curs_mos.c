@@ -38,8 +38,8 @@ CURS_MOS *NewCURS_MOS (int new_height, int new_width) {
 
 void dobox (CURS_MOS *img) {
 	int i;
-	int y = img->img->height;
-	int x = img->img->width;
+	const int y = img->img->height;
+	const int x = img->img->width;
 	// bottom
 	for (i = 0; i < x; i++) {
 		mvwaddch (img->win, y, i, ACS_HLINE);
@@ -62,8 +62,9 @@ void ResizeCURS_MOS_WINDOW (CURS_MOS *target, int new_height, int new_width) {
 
 
 int ResizeCURS_MOS (CURS_MOS *target, int new_height, int new_width) {
+	int aux = ResizeMOSAIC (target->img, new_height, new_width);
 	ResizeCURS_MOS_WINDOW (target, new_height, new_width);
-	return ResizeMOSAIC (target->img, new_height, new_width);
+	return aux;
 }
 
 

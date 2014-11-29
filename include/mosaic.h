@@ -171,6 +171,7 @@ int CopyMOSAIC (MOSAIC *dest, MOSAIC *src);
  * @param[in] resize Bool: sould we resize the mosaic?
  *
  * @return The return from ResizeMOSAIC if resizing
+ * @return ERR if asked for a resize in a blank MOSAIC
  * @return 0 otherwise (it'll never go wrong if not resizing and used wisely)
  */
 int TrimMOSAIC (MOSAIC *target, char resize);
