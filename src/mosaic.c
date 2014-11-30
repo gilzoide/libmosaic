@@ -127,8 +127,8 @@ mos_attr mosGetAttr (MOSAIC *img, int y, int x) {
 
 int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	// old dimensions
-	int old_height = img->height;
-	int old_width = img->width;
+	const int old_height = img->height;
+	const int old_width = img->width;
 	// new dimensions
 	img->height = new_height;
 	img->width = new_width;
@@ -146,7 +146,7 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	// mosaic:
 	if ((img->mosaic = (mos_char**) realloc (
 			img->mosaic, new_height * sizeof (mos_char*))) == NULL) {
-		return -1;
+		return ERR;
 	}
 	// when growing, initialize lines with NULL, so realloc mallocs them
 	for (i = old_height; i < new_height; i++) {
@@ -155,7 +155,7 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	// attributes:
 	if ((img->attr = (mos_attr**) realloc (
 			img->attr, new_height * sizeof (mos_attr*))) == NULL) {
-		return -1;
+		return ERR;
 	}
 	// when growing, initialize lines with NULL, so realloc mallocs them
 	for (i = old_height; i < new_height; i++) {
@@ -166,11 +166,11 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	for (i = 0; i < new_height; i++) {
 		if ((img->mosaic[i] = (mos_char*) realloc (
 				img->mosaic[i], new_width * sizeof (mos_char))) == NULL) {
-			return -1;
+			return ERR;
 		}
 		if ((img->attr[i] = (mos_attr*) realloc (
 				img->attr[i], new_width * sizeof (mos_attr))) == NULL) {
-			return -1;
+			return ERR;
 		}
 	}
 	
@@ -220,7 +220,7 @@ int CopyMOSAIC (MOSAIC *dest, MOSAIC *src) {
 		return 0;
 	}
 	else {
-		return -1;
+		return ERR;
 	}
 }
 

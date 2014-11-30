@@ -101,7 +101,7 @@ mos_char mosGetch (MOSAIC *img, int y, int x);
  * @param[in] x X coordinate
  * @param[in] a New char attribute
  *
- * @return the mos_attr
+ * @return The mos_attr
  * @return Normal if out of Boundaries, as it's a default value
  */
 mos_attr mosGetAttr (MOSAIC *img, int y, int x);
@@ -143,7 +143,7 @@ MOSAIC * SubMOSAIC (MOSAIC *parent, int begin_y, int begin_x, int height, int wi
  * @param[in] new_width MOSAIC's new width
  * 
  * @return 0 if successfully resized @ref MOSAIC
- * @return -1 if allocation failed
+ * @return ERR if allocation failed
  */
 int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width);
 /**
@@ -156,7 +156,7 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width);
  * @param[in] src Source MOSAIC
  *
  * @return 0 if successfully copied from src to dest
- * @return -1 otherwise
+ * @return ERR otherwise
  */
 int CopyMOSAIC (MOSAIC *dest, MOSAIC *src);
 /**
@@ -190,7 +190,8 @@ int TrimMOSAIC (MOSAIC *target, char resize);
  * @param[in] image The image to be saved
  * @param[in] file_name The new file name
  * 
- * @return 0 on success, _errno_ on failure
+ * @return 0 on success
+ * @return _errno_ on failure
  */
 int SaveMOSAIC (MOSAIC *image, const char *file_name);
 /**
@@ -201,7 +202,9 @@ int SaveMOSAIC (MOSAIC *image, const char *file_name);
  * @param[out] image The image to be loaded onto
  * @param[in] file_name The file name
  * 
- * @return 0 on success, _errno_ on failure, 1 on no dimensions present in the file
+ * @return 0 on success
+ * @return _errno_ on failure
+ * @return 1 if no dimensions present in the file
  */
 int LoadMOSAIC (MOSAIC *image, const char *file_name);
 

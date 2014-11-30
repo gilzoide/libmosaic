@@ -23,8 +23,7 @@ CURS_MOS *NewCURS_MOS (int new_height, int new_width) {
 	new_image->img = NewMOSAIC (new_height, new_width);
 
 	// create the curses window and panel
-	new_image->win = newpad (new_height + 1, new_width + 1);
-	dobox (new_image);	// put a border
+	new_image->win = newpad (new_height, new_width);
 
 	new_image->y = new_image->x = 0;
 	scrollok (new_image->win, TRUE);
@@ -36,34 +35,18 @@ CURS_MOS *NewCURS_MOS (int new_height, int new_width) {
 }
 
 
-void dobox (CURS_MOS *img) {
-	int i;
-	const int y = img->img->height;
-	const int x = img->img->width;
-	// bottom
-	for (i = 0; i < x; i++) {
-		mvwaddch (img->win, y, i, ACS_HLINE);
-	}
-	// right
-	for (i = 0; i < y; i++) {
-		mvwaddch (img->win, i, x, ACS_VLINE);
-	}
-	// bottom-right corner
-	mvwaddch (img->win, y, x, ACS_LRCORNER);
-}
-
-
 void ResizeCURS_MOS_WINDOW (CURS_MOS *target, int new_height, int new_width) {
 	delwin (target->win);
-	target->win = newpad (new_height + 1, new_width + 1);
-
-	dobox (target);
+	target->win = newpad (new_height, new_width);
 }
 
 
 int ResizeCURS_MOS (CURS_MOS *target, int new_height, int new_width) {
 	int aux = ResizeMOSAIC (target->img, new_height, new_width);
-	ResizeCURS_MOS_WINDOW (target, new_height, new_width);
+	// resizing was not a problem, so resize the WINDOW
+	if (!aux) {
+		ResizeCURS_MOS_WINDOW (target, new_height, new_width);
+	}
 	return aux;
 }
 
@@ -159,7 +142,7 @@ int curs_mosSetAttr (CURS_MOS *image, int y, int x, mos_attr a) {
 
 
 void DisplayCurrentMOSAIC (CURS_MOS *current) {
-	top_panel (current->pan);
+	show_panel (current->pan);
 	update_panels ();
 	doupdate ();
 	prefresh (current->win, current->y, current->x, 0, 0, LINES - 2, COLS - 1);

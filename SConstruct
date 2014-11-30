@@ -18,18 +18,18 @@ Everything can be uninstalled running `scons uninstall`.
 
 if not GetOption ('help'):
     env = Environment (
-        CCFLAGS = '-Wall -pipe',
+        CCFLAGS = '-Wall -pipe -g -O2',
         CPPPATH = '#include',
         CC = 'gcc',
     )
     env.Decider ('MD5-timestamp')
 
     # if user pass debug=1, add -g flag for the compiler
-    debug = ARGUMENTS.get ('debug', 0)
-    if int (debug):
-        env.Append (CCFLAGS = ' -g')
-    else:
-        env.Append (CCFLAGS = ' -O2')
+    #debug = ARGUMENTS.get ('debug', 0)
+    #if int (debug):
+        #env.Append (CCFLAGS = ' -g')
+    #else:
+        #env.Append (CCFLAGS = ' -O2')
     
     # headers and install headers
     headers = ['mosaic.h', 'color.h', 'curs_mos.h']

@@ -48,9 +48,6 @@ void CircularIMGS (IMGS *imgs, CURS_MOS *mos);
  * @return __NULL__ if allocation failed
  */
 CURS_MOS *NewCURS_MOS (int new_height, int new_width);
-/** aux for the NewCURS_MOS: creates the right and bottom border */
-void dobox (CURS_MOS *img);
-
 /**
  * Refreshes target's WINDOW, rewriting it from scratch
  *
@@ -92,8 +89,7 @@ void ResizeCURS_MOS_WINDOW (CURS_MOS *target, int new_height, int new_width);
  * @param[in] target Target MOSAIC
  * @param[in] resize Bool: sould we resize the mosaic?
  *
- * @return The return from ResizeCURS_MOS if resizing
- * @return 0 otherwise
+ * @return The return from TrimMOSAIC
  */
 int TrimCURS_MOS (CURS_MOS *target, char resize);
 /**
