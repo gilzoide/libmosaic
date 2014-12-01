@@ -14,7 +14,6 @@ void CircularIMGS (IMGS *imgs, CURS_MOS *mos) {
 
 
 CURS_MOS *NewCURS_MOS (int new_height, int new_width) {
-	// create new CURS_MOS
 	CURS_MOS *new_image;
 	if ((new_image = (CURS_MOS*) malloc (sizeof (CURS_MOS))) == NULL) {
 		return NULL;
@@ -22,11 +21,14 @@ CURS_MOS *NewCURS_MOS (int new_height, int new_width) {
 
 	new_image->img = NewMOSAIC (new_height, new_width);
 
+	if (!new_image->img) {
+		return NULL;
+	}
+
 	// create the curses window and panel
 	new_image->win = newpad (new_height, new_width);
 
 	new_image->y = new_image->x = 0;
-	scrollok (new_image->win, TRUE);
 
 	new_image->pan = new_panel (new_image->win);
 	DisplayCurrentMOSAIC (new_image);
