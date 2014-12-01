@@ -25,6 +25,8 @@ typedef struct {
 	unsigned char isSub : 2;
 } MOSAIC;
 
+/// Mosi file error: "no dimensions in file"
+#define ENODIMENSIONS -2
 /// Mosi text/binary separator
 #define SEPARATOR 31
 

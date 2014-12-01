@@ -251,12 +251,15 @@ int TrimMOSAIC (MOSAIC *target, char resize) {
 		return ERR;
 	}
 
-	// move the data from mosaic[src_y][src_x] to mosaic[i][j]
-	int src_x, src_y;
-	for (src_y = ULy, i = 0; src_y <= BRy; src_y++, i++) {
-		for (src_x = ULx, j = 0; src_x <= BRx; src_x++, j++) {
-			target->mosaic[i][j] = target->mosaic[src_y][src_x];
-			target->mosaic[src_y][src_x] = ' ';
+	// move the data from mosaic[src_y][src_x] to mosaic[i][j],
+	// but skip if it's already at (0,0)
+	if (ULy && ULx) {
+		int src_x, src_y;
+		for (src_y = ULy, i = 0; src_y <= BRy; src_y++, i++) {
+			for (src_x = ULx, j = 0; src_x <= BRx; src_x++, j++) {
+				target->mosaic[i][j] = target->mosaic[src_y][src_x];
+				target->mosaic[src_y][src_x] = ' ';
+			}
 		}
 	}
 
@@ -304,10 +307,13 @@ int LoadMOSAIC (MOSAIC *image, const char *file_name) {
 	int new_height, new_width;
 	if (!fscanf (f, "%3dx%3d", &new_height, &new_width)) {
 		fclose (f);
-		return 1;
+		return ENODIMENSIONS;
 	}
 	
-	ResizeMOSAIC (image, new_height, new_width);
+	// try to resize, get out if trouble
+	if (!ResizeMOSAIC (image, new_height, new_width)) {
+		return ERR;
+	}
 
 	int c;
 	// there's supposed to have a '\n' to discard after %dx%d;
