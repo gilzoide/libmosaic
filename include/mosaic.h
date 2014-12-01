@@ -65,7 +65,9 @@ char outOfBoundaries (MOSAIC *img, int y, int x);
  * @return 1 on success
  * @return 0 on out of boundaries
  */
-int mosAddch (MOSAIC *img, int y, int x, mos_char c);
+int mosAddCh (MOSAIC *img, int y, int x, mos_char c);
+/// Checkfree version of mosAddCh
+#define _mosAddCh(img, y, x, c)		(img->mosaic[(y)][(x)] = (c))
 /**
  * Changes a MOSAIC's mos_char's mos_attr, at position y/x
  * 
@@ -80,6 +82,8 @@ int mosAddch (MOSAIC *img, int y, int x, mos_char c);
  * @return 0 on out of boundaries
  */
 int mosSetAttr (MOSAIC *img, int y, int x, mos_attr a);
+/// Checkfree version of mosSetAttr
+#define _mosSetAttr(img, y, x, a)		(img->attr[(y)][(x)] = (a))
 /**
  * Get the char at position y/x
  *
@@ -92,7 +96,9 @@ int mosSetAttr (MOSAIC *img, int y, int x, mos_attr a);
  * @return Char in mosaic[y][x]
  * @return 0 on out of boundaries
  */
-mos_char mosGetch (MOSAIC *img, int y, int x);
+mos_char mosGetCh (MOSAIC *img, int y, int x);
+/// Checkfree version of mosGetCh
+#define _mosGetCh(img, y, x)		(img->mosaic[(y)][(x)])
 /**
  * Changes a MOSAIC's mos_char's mos_attr, at position y/x
  * 
@@ -107,6 +113,8 @@ mos_char mosGetch (MOSAIC *img, int y, int x);
  * @return Normal if out of Boundaries, as it's a default value
  */
 mos_attr mosGetAttr (MOSAIC *img, int y, int x);
+/// Checkfree version of mosGetAttr
+#define _mosGetAttr(img, y, x)		(img->attr[(y)][(x)])
 /** 
  * Create a new @ref MOSAIC, allocating the necessary memory
  * 

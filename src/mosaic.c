@@ -82,7 +82,7 @@ MOSAIC * SubMOSAIC (MOSAIC *parent, int begin_y, int begin_x, int height, int wi
 }
 
 
-int mosAddch (MOSAIC *img, int y, int x, mos_char c) {
+int mosAddCh (MOSAIC *img, int y, int x, mos_char c) {
 	if (outOfBoundaries (img, y, x)) {
 		return 0;
 	}
@@ -104,7 +104,7 @@ int mosSetAttr (MOSAIC *img, int y, int x, mos_attr a) {
 }
 
 
-mos_char mosGetch (MOSAIC *img, int y, int x) {
+mos_char mosGetCh (MOSAIC *img, int y, int x) {
 	if (!outOfBoundaries (img, y, x)) {
 		return img->mosaic[y][x];
 	}

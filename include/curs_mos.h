@@ -126,6 +126,10 @@ void LinkCURS_MOS (CURS_MOS *dest, CURS_MOS *src, enum direction dir);
  * @return ERR on error
  */
 int curs_mosAddch (CURS_MOS *image, int y, int x, int c);
+/// Just a nice definition for getting the mos_char
+#define curs_mosGetCh(i, y, x)		(mosGetCh (i->img, y, x))
+/// Another nice definition for mos_char, without boundaries checking
+#define _curs_mosGetCh(i, y, x)		(_mosGetCh (i->img, y, x))
 
 /**
  * Set a char's attr at position y/x and update it's WINDOW.
@@ -136,6 +140,10 @@ int curs_mosAddch (CURS_MOS *image, int y, int x, int c);
  * @return ERR on error
  */
 int curs_mosSetAttr (CURS_MOS *image, int y, int x, mos_attr a);
+/// Just a nice definition for getting the mos_attr
+#define curs_mosGetAttr(i, y, x)	(mosGetAttr (i->img, y, x))
+/// Another nice definition for mos_attr, without boundaries checking
+#define _curs_mosGetAttr(i, y, x)		(_mosGetAttr (i->img, y, x))
 /**
  * Displays current CURS_MOS in the stdscr
  * 

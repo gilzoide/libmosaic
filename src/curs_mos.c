@@ -120,7 +120,7 @@ void LinkCURS_MOS (CURS_MOS *dest, CURS_MOS *src, enum direction dir) {
 
 
 int curs_mosAddch (CURS_MOS *image, int y, int x, int c) {
-	if (!mosAddch (image->img, y, x, c)) {
+	if (!mosAddCh (image->img, y, x, c)) {
 		return ERR;
 	}
 
