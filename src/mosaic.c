@@ -311,15 +311,16 @@ int LoadMOSAIC (MOSAIC *image, const char *file_name) {
 	}
 	
 	// try to resize, get out if trouble
-	if (!ResizeMOSAIC (image, new_height, new_width)) {
+	if (ResizeMOSAIC (image, new_height, new_width)) {
 		return ERR;
 	}
 
 	int c;
 	// there's supposed to have a '\n' to discard after %dx%d;
 	// but if there ain't one, we read what's after
-	if ((c = fgetc (f)) != '\n')
+	if ((c = fgetc (f)) != '\n') {
 		ungetc (c, f);
+	}
 	
 	int i, j;
 	for (i = 0; i < image->height; i++) {

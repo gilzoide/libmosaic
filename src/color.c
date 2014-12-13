@@ -148,7 +148,7 @@ void TestColors_Stdout () {
 	for (i = Normal; i <= WW; i++) {
 		Tcolor (i);
 		putchar ('U');
-		if (i % 9 == 8) {
+		if (i % COLORS_STEP == COLORS_STEP - 1) {
 			Tcolor (Normal);
 			putchar ('\n');
 		}
@@ -159,7 +159,7 @@ void TestColors_Stdout () {
 	for (i = Normal; i <= WW; i++) {
 		Tcolor (i + BOLD);
 		putchar ('U');
-		if (i % 9 == 8) {
+		if (i % COLORS_STEP == COLORS_STEP - 1) {
 			Tcolor (Normal);
 			putchar ('\n');
 		}
@@ -172,17 +172,17 @@ void Tcolor (mos_attr color) {
 	char *bg_color_table[] = {"49", "40", "41", "42", "43", "44", "45", "46", "47"};
 	char aux[] = "\e[  m\e[  m";
 
-	// they told me it may be bold
+	// they told me it may be bold...
 	if (extractBold (&color)) {
-		// tell the terminal it's bold
+		// ...so I tell the terminal if it is
 		strcat (aux, "\e[1m");
 	}
 
-	aux[2] = fg_color_table[color / 9][0];
-	aux[3] = fg_color_table[color / 9][1];
+	aux[2] = fg_color_table[color / COLORS_STEP][0];
+	aux[3] = fg_color_table[color / COLORS_STEP][1];
 
-	aux[7] = bg_color_table[color % 9][0];
-	aux[8] = bg_color_table[color % 9][1];
+	aux[7] = bg_color_table[color % COLORS_STEP][0];
+	aux[8] = bg_color_table[color % COLORS_STEP][1];
 
 	printf ("%s", aux);
 }

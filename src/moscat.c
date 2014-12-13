@@ -80,9 +80,9 @@ void printMOSAIC (MOSAIC *img, char color) {
 	for (i = 0; i < img->height; i++) {
 		for (j = 0; j < img->width; j++) {
 			if (color) {
-				Tcolor (img->attr[i][j]);
+				Tcolor (_mosGetAttr (img, i, j));
 			}
-			putchar (img->mosaic[i][j]);
+			putchar (_mosGetCh (img, i, j));
 		}
 
 		// Reset to default terminal color
@@ -114,7 +114,7 @@ int main (int argc, char *argv[]) {
 		// print the image at stdout
 		printMOSAIC (img, arguments.color);
 	}
-	else if (load_result == 1) {
+	else if (load_result == ENODIMENSIONS) {
 		fprintf (stderr, "There are no dimensions in this file... \
 It's probably not a mosaic image!\n");
 	}

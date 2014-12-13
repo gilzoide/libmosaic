@@ -214,7 +214,7 @@ int SaveMOSAIC (MOSAIC *image, const char *file_name);
  * 
  * @return 0 on success
  * @return _errno_ on failure
- * @return 1 if no dimensions present in the file
+ * @return ENODIMENSIONS if no dimensions present in the file
  */
 int LoadMOSAIC (MOSAIC *image, const char *file_name);
 
