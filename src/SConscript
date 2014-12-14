@@ -5,12 +5,13 @@ Import (['env', 'curs_env', 'cat_env', 'headers', 'instHeaders'])
 mosaic = env.SharedLibrary ('libmosaic', 'mosaic.c')
 curs_mos = curs_env.SharedLibrary ('libmosaic_curses', 'curs_mos.c')
 color = curs_env.SharedLibrary ('libmosaic_color', 'color.c')
+stream_io = curs_env.SharedLibrary ('libmosaic_stream_io', 'stream_io.c')
 
 # the moscat application
 cat_src = 'moscat.c'
 moscat = cat_env.Program ('moscat', cat_src)
 
-Default ([mosaic, curs_mos, color, moscat])
+Default ([mosaic, curs_mos, color, stream_io, moscat])
 
 ## INSTALL STUFF ##
 # includes -> *.h
@@ -21,7 +22,7 @@ for i in range (len (headers)):
 
 
 curs_env.Install ('/usr/bin', moscat)
-curs_env.Install ('/usr/lib', [mosaic, curs_mos, color])
+curs_env.Install ('/usr/lib', [mosaic, curs_mos, color, stream_io])
 # targets: install{,-bin,-lib,-include}
 curs_env.Alias ('install-lib', '/usr/lib')
 curs_env.Alias ('install-bin', '/usr/bin')

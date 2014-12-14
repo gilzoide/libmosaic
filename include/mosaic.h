@@ -25,12 +25,6 @@ typedef struct {
 	unsigned char isSub : 2;
 } MOSAIC;
 
-/// Mosi file error: "no dimensions in file"
-#define ENODIMENSIONS -2
-/// Mosi text/binary separator
-#define SEPARATOR 31
-
-
 /**
  * Inline function that measures the total size of an image
  * 
@@ -185,38 +179,6 @@ int CopyMOSAIC (MOSAIC *dest, MOSAIC *src);
  * @return 0 otherwise (it'll never go wrong if not resizing and used wisely)
  */
 int TrimMOSAIC (MOSAIC *target, char resize);
-
-/**
- * Saves the image in a file
- * 
- * The file has a header with the mosaic dimensions,
- * the asc art itself and it's attributes.
- * 
- * @note A .mosi file is hybrid.
- * The dimensions and @ref MOSAIC::mosaic are text, so they can be viewed in 
- * any text editor. The @ref MOSAIC::attr part is binary, so expect some weird
- * stuff while oppening it as text.
- * 
- * @param[in] image The image to be saved
- * @param[in] file_name The new file name
- * 
- * @return 0 on success
- * @return _errno_ on failure
- */
-int SaveMOSAIC (MOSAIC *image, const char *file_name);
-/**
- * Loads the image from a file
- * 
- * It's the same scheme from the @ref SaveMOSAIC function
- * 
- * @param[out] image The image to be loaded onto
- * @param[in] file_name The file name
- * 
- * @return 0 on success
- * @return _errno_ on failure
- * @return ENODIMENSIONS if no dimensions present in the file
- */
-int LoadMOSAIC (MOSAIC *image, const char *file_name);
 
 /// Destroy an image, deallocating the used memory
 void FreeMOSAIC (MOSAIC *img);

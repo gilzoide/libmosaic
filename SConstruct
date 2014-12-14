@@ -32,14 +32,15 @@ if not GetOption ('help'):
         #env.Append (CCFLAGS = ' -O2')
     
     # headers and install headers
-    headers = ['mosaic.h', 'color.h', 'curs_mos.h']
+    headers = ['mosaic.h', 'color.h', 'curs_mos.h', 'stream_io.h']
     instHeaders = ['/usr/include/mosaic/' + h for h in headers]
 
     curs_env = env.Clone (LIBS = ['panel', 'curses'], LIBPATH = ['/usr/lib', 
             '/usr/local/lib'])
 
     # moscat needs mosaic{,_color}, so link with it as a shared library
-    cat_env = env.Clone (LIBS = ['mosaic', 'mosaic_color'], LIBPATH = '#build')
+    cat_env = env.Clone (LIBS = ['mosaic', 'mosaic_color', 'mosaic_stream_io'],
+            LIBPATH = '#build')
 
     # build mosaic in the 'build' directory, without duplicating
     VariantDir ('build', 'src', duplicate = 0)

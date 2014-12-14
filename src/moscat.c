@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "mosaic.h"
-#include "curs_mos.h"
+#include "stream_io.h"
 
 /* ARGP for parsing the arguments */
 #include <argp.h>

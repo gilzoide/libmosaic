@@ -1,5 +1,5 @@
 #include "curs_mos.h"
-
+#include "stream_io.h"
 
 void InitIMGS (IMGS *imgs) {
 	imgs->list = NULL;
@@ -84,16 +84,15 @@ void RefreshCURS_MOS (CURS_MOS *target) {
 int LoadCURS_MOS (CURS_MOS *target, const char *file_name) {
 	// load the MOSAIC, please
 	int aux = LoadMOSAIC (target->img, file_name);
-	if (aux != 0) {
-		return aux;
+
+	if (aux == 0 || aux == EUNKNSTRGFMT) {
+		// resize only target's WINDOW, as the MOSAIC was resized on LoadMOSAIC
+		ResizeCURS_MOS_WINDOW (target, target->img->height, target->img->width);
+		// refreshing
+		RefreshCURS_MOS (target);
 	}
 
-	// resize only target's WINDOW, as the MOSAIC was resized on LoadMOSAIC
-	ResizeCURS_MOS_WINDOW (target, target->img->height, target->img->width);
-	// refreshing
-	RefreshCURS_MOS (target);
-
-	return 0;
+	return aux;
 }
 
 
