@@ -106,6 +106,17 @@ int main (int argc, char *argv[]) {
 
 	int load_result = LoadMOSAIC (img, arguments.input);
 
+	// if unknown format, can't write it in colors
+	if (load_result == EUNKNSTRGFMT) {
+		if (arguments.color) {
+			fprintf (stderr, "Couldn't figure out attribute format. "
+					"Disabling colors!\n");
+
+			arguments.color = 0;
+		}
+		load_result = 0;
+	}
+
 	if (!load_result) {
 		if (arguments.dimensions) {
 			printf ("%dx%d\n", img->height, img->width);
@@ -115,8 +126,8 @@ int main (int argc, char *argv[]) {
 		printMOSAIC (img, arguments.color);
 	}
 	else if (load_result == ENODIMENSIONS) {
-		fprintf (stderr, "There are no dimensions in this file... \
-It's probably not a mosaic image!\n");
+		fprintf (stderr, "There are no dimensions in this file..."
+				"It's probably not a mosaic image!\n");
 	}
 	else {
 		fprintf (stderr, "Couldn't load file. %s.\n", strerror (errno));

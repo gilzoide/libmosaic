@@ -2,13 +2,6 @@
 
 #include <string.h>
 
-/**
- * Checks whether fmt is one of the define attr_storage_fmts.
- */
-int isAttrSeparator (attr_storage_fmt fmt) {
-	return fmt == UNCOMPRESSED || fmt == COMPRESSED || fmt == NO_ATTR;
-}
-
 
 int fgetMOSAIC (MOSAIC *image, FILE *stream) {
 	int new_height, new_width;
@@ -33,7 +26,7 @@ int fgetMOSAIC (MOSAIC *image, FILE *stream) {
 		// read the line until the end or no more width is available
 		for (j = 0; j < image->width; j++) {
 			c = fgetc (stream);
-			if (isAttrSeparator (c) || c == EOF) {
+			if (c == SEPARATOR || c == EOF) {
 				// used so won't need a flag or more comparisons
 				// to break both the fors
 				goto FILL_WITH_BLANK;
@@ -67,13 +60,18 @@ FILL_WITH_BLANK:
 	}
 
 	// jump to the SEPARATOR, if it exists
-	while (!isAttrSeparator (c) && c != EOF) {
+	while (c != SEPARATOR && c != EOF) {
+		c = fgetc (stream);
+	}
+	// if SEPARATOR, and not EOF, read the next char, which hopely 
+	// will be the format
+	if (c != EOF) {
 		c = fgetc (stream);
 	}
 
+	// Time for some Attributes! (color/bold)
 	switch (c) {
 		case UNCOMPRESSED:
-			// Time for some Attributes! (color/bold)
 			; size_t check = image->width;
 			for (i = 0; check == image->width && i < image->width; i++) {
 				check = fread (image->attr[i], sizeof (mos_attr), image->width, stream);
@@ -108,7 +106,10 @@ int fputFmtMOSAIC (MOSAIC *image, attr_storage_fmt fmt, FILE *stream) {
 		fprintf (stream, "%.*s\n", image->width, image->mosaic[i]);
 	}
 
-	// put the separator
+	// time for binary stuff
+	fputc (SEPARATOR, stream);
+
+	// put the format
 	fputc (fmt, stream);
 
 	switch (fmt) {

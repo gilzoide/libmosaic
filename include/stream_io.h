@@ -18,6 +18,9 @@
 
 #include "mosaic.h"
 
+/// Mosi text/binary separator char
+#define SEPARATOR '\t'
+
 /// Mosi stream error code: "no dimensions specified"
 #define ENODIMENSIONS -2
 /// Mosi stream error code: "unknown attribute storage format"
