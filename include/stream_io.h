@@ -29,12 +29,12 @@
 /// Attribute storage format
 typedef enum {
 	UNCOMPRESSED = 'U',	///< Binary part not compressed
-	COMPRESSED = 'C',	///< Binary part compressed with gzip
+	COMPRESSED = 'C',	///< Binary part compressed with zlib
 	NO_ATTR = '.'	///< No attributes in this file, so load it all as Normal
 } attr_storage_fmt;
 
 /// The default attribute storage type
-#define DEFAULT_STORAGE_FMT UNCOMPRESSED
+#define DEFAULT_STORAGE_FMT COMPRESSED
 
 /**
  * Reads image from the stream pointed to by stream.
@@ -59,6 +59,7 @@ int fgetMOSAIC (MOSAIC *image, FILE *stream);
  *
  * @return 0 on success
  * @return EUNKNSTRGFMT if unknown format is passed
+ * @return ERR for other errors (might be error in the compression)
  */
 int fputFmtMOSAIC (MOSAIC *image, attr_storage_fmt fmt, FILE *stream);
 /// Just a nice way to call fputMOSAIC with the default storage format

@@ -21,6 +21,7 @@ if not GetOption ('help'):
         CCFLAGS = '-Wall -pipe -g -O2',
         CPPPATH = '#include',
         CC = 'gcc',
+        LIBS = 'z',
     )
     env.Decider ('MD5-timestamp')
 
