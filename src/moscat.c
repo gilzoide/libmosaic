@@ -33,8 +33,7 @@ struct arguments {
 static error_t parse_opt (int key, char *arg, struct argp_state *state) {
 	struct arguments *argumentos = (struct arguments*) state->input;
 
-	switch (key)
-	{
+	switch (key) {
 		case 'c':
 			argumentos->color = 1;
 			break;

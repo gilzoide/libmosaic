@@ -121,7 +121,7 @@ void TestColors_Curses () {
 	for (i = Normal; i <= WW; i++) {
 		attron (COLOR_PAIR (i));
 		addch ('U');
-		if (i % 9 == 8) {
+		if (i % COLORS_STEP == 8) {
 			attron (COLOR_PAIR (Normal));
 			addch ('\n');
 		}
@@ -133,7 +133,7 @@ void TestColors_Curses () {
 	for (i = Normal; i <= WW; i++) {
 		attron (COLOR_PAIR (i) | A_BOLD);
 		addch ('U');
-		if (i % 9 == 8) {
+		if (i % COLORS_STEP == COLORS_STEP - 1) {
 			attron (COLOR_PAIR (Normal));
 			addch ('\n');
 		}
@@ -178,11 +178,11 @@ void Tcolor (mos_attr color) {
 		strcat (aux, "\e[1m");
 	}
 
-	aux[2] = fg_color_table[color / COLORS_STEP][0];
-	aux[3] = fg_color_table[color / COLORS_STEP][1];
+	aux[2] = fg_color_table[GetFore (color)][0];
+	aux[3] = fg_color_table[GetFore (color)][1];
 
-	aux[7] = bg_color_table[color % COLORS_STEP][0];
-	aux[8] = bg_color_table[color % COLORS_STEP][1];
+	aux[7] = bg_color_table[GetBack (color)][0];
+	aux[8] = bg_color_table[GetBack (color)][1];
 
 	printf ("%s", aux);
 }

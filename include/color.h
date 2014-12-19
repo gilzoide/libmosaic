@@ -151,6 +151,11 @@ enum colors {
 /// a color with the the same background, but the next foreground
 #define COLORS_STEP BkN
 
+/// Get the color's foreground
+#define GetFore(color) (color / COLORS_STEP)
+/// Get the color's background
+#define GetBack(color) (color % COLORS_STEP)
+
 /**
  * Change the color printed at stdout
  */
