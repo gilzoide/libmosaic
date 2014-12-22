@@ -5,7 +5,7 @@ Import (['env', 'curs_env', 'cat_env', 'headers', 'instHeaders'])
 mosaic = env.SharedLibrary ('libmosaic', 'mosaic.c')
 curs_mos = curs_env.SharedLibrary ('libmosaic_curses', 'curs_mos.c')
 color = curs_env.SharedLibrary ('libmosaic_color', 'color.c')
-stream_io = curs_env.SharedLibrary ('libmosaic_stream_io', 'stream_io.c')
+stream_io = env.SharedLibrary ('libmosaic_stream_io', 'stream_io.c')
 
 # the moscat application
 cat_src = 'moscat.c'
