@@ -169,17 +169,17 @@ void TestColors_Stdout () {
 void Tcolor (mos_attr color) {
 	char *fg_color_table[] = {"39", "30", "31", "32", "33", "34", "35", "36", "37"};
 	char *bg_color_table[] = {"49", "40", "41", "42", "43", "44", "45", "46", "47"};
-	char aux[] = "\e[  m\e[  m\e[ m";
+	char aux[] = "\e[ m\e[  m\e[  m";
 
 	// they told me it may be bold, so write it also
 	// note that we have to extract the bold before using the colors separately
-	aux[12] = extractBold (&color) ? '1' : '0';
+	aux[2] = extractBold (&color) ? '1' : '0';
 
-	aux[2] = fg_color_table[GetFore (color)][0];
-	aux[3] = fg_color_table[GetFore (color)][1];
+	aux[6] = fg_color_table[GetFore (color)][0];
+	aux[7] = fg_color_table[GetFore (color)][1];
 
-	aux[7] = bg_color_table[GetBack (color)][0];
-	aux[8] = bg_color_table[GetBack (color)][1];
+	aux[11] = bg_color_table[GetBack (color)][0];
+	aux[12] = bg_color_table[GetBack (color)][1];
 
 	printf ("%s", aux);
 }
