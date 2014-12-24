@@ -125,7 +125,8 @@ int uncompressMOSAIC (MOSAIC *image, FILE *stream) {
 
 int fgetMOSAIC (MOSAIC *image, FILE *stream) {
 	int new_height, new_width;
-	if (!fscanf (stream, "%3dx%3d", &new_height, &new_width)) {
+	int dim_return = fscanf (stream, "%3dx%3d", &new_height, &new_width);
+	if (!dim_return || dim_return == EOF) {
 		return ENODIMENSIONS;
 	}
 	
@@ -221,7 +222,7 @@ FILL_WITH_BLANK:
 int fputFmtMOSAIC (MOSAIC *image, attr_storage_fmt fmt, FILE *stream) {
 	fprintf (stream, "%dx%d\n", image->height, image->width);
 	
-	// Mosaic
+	// Mosaic //
 	int i;
 	for (i = 0; i < image->height; i++) {
 		fprintf (stream, "%.*s\n", image->width, image->mosaic[i]);
@@ -233,15 +234,15 @@ int fputFmtMOSAIC (MOSAIC *image, attr_storage_fmt fmt, FILE *stream) {
 	// put the format
 	fputc (fmt, stream);
 
+	// Attr //
 	switch (fmt) {
 		case UNCOMPRESSED:
-			// Attr
 			for (i = 0; i < image->height; i++) {
 				fwrite (image->attr[i], sizeof (mos_attr), image->width, stream);
 			}
 			break;
 
-		// compress with zlib into the `out' array, and write in `stream'
+		// compress with zlib
 		case COMPRESSED:
 			return compressMOSAIC (image, fmt, stream);
 
