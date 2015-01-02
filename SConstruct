@@ -49,5 +49,5 @@ if not GetOption ('help'):
             'headers', 'instHeaders'])
 
     # headers is defined in the SConscript file globally
-    curs_env.Command ("uninstall", None, Delete (FindInstalledFiles() 
+    curs_env.Command ("uninstall", None, Delete (FindInstalledFiles () 
             + instHeaders))

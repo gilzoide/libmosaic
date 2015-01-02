@@ -178,15 +178,17 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	int j;
 	if (old_height > 0 && old_width > 0) {
 		// new lines, until old width
+		int width_limit = min (old_width, old_height);
 		for (i = old_height; i < new_height; i++) {
-			for (j = 0; j < old_width; j++) {
+			for (j = 0; j < width_limit; j++) {
 				img->mosaic[i][j] = ' ';
 				img->attr[i][j] = Normal;
 			}
 		}
 		// new columns, until old height
+		int height_limit = min (old_height, old_height);
 		for (i = old_width; i < new_width; i++) {
-			for (j = 0; j < old_height; j++) {
+			for (j = 0; j < height_limit; j++) {
 				img->mosaic[j][i] = ' ';
 				img->attr[j][i] = Normal;
 			}

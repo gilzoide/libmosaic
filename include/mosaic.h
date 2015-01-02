@@ -20,9 +20,9 @@ typedef unsigned char mos_char;
 typedef struct {
 	int height;	///< img height
 	int	width;	///< img width
-	mos_char **mosaic;		/**< a height * width sized string: the drawing itself */
-	mos_attr **attr;	/**< a height * width sized array with the attributes for each char. */
-	unsigned char isSub : 2;
+	mos_char **mosaic;		///< a height * width sized string: the drawing itself
+	mos_attr **attr;	///< a height * width sized array with the attributes for each char
+	unsigned char isSub : 2;	///< boolean: is it a subMOSAIC?
 } MOSAIC;
 
 /**
@@ -48,8 +48,6 @@ char outOfBoundaries (MOSAIC *img, int y, int x);
 
 /**
  * Add a char to the MOSAIC at position y/x
- * 
- * @note If position is outside image boundaries, returns 0 
  *
  * @param[in] img Target MOSAIC
  * @param[in] y Y coordinate
@@ -60,12 +58,10 @@ char outOfBoundaries (MOSAIC *img, int y, int x);
  * @return 0 on out of boundaries
  */
 int mosAddCh (MOSAIC *img, int y, int x, mos_char c);
-/// Checkfree version of mosAddCh
+/// Checkfree version of @ref mosAddCh
 #define _mosAddCh(img, y, x, c)		(img->mosaic[(y)][(x)] = (c))
 /**
- * Changes a MOSAIC's mos_char's mos_attr, at position y/x
- * 
- * @note If position is outside image boundaries, returns 0 
+ * Changes a MOSAIC's mos_char's attribute, at position y/x
  *
  * @param[in] img Target MOSAIC
  * @param[in] y Y coordinate
@@ -76,12 +72,10 @@ int mosAddCh (MOSAIC *img, int y, int x, mos_char c);
  * @return 0 on out of boundaries
  */
 int mosSetAttr (MOSAIC *img, int y, int x, mos_attr a);
-/// Checkfree version of mosSetAttr
+/// Checkfree version of @ref mosSetAttr
 #define _mosSetAttr(img, y, x, a)		(img->attr[(y)][(x)] = (a))
 /**
  * Get the char at position y/x
- *
- * @note If position is outside image boundaries, returns 0 
  *
  * @param[in] img Target MOSAIC
  * @param[in] y Y coordinate
@@ -91,28 +85,24 @@ int mosSetAttr (MOSAIC *img, int y, int x, mos_attr a);
  * @return 0 on out of boundaries
  */
 mos_char mosGetCh (MOSAIC *img, int y, int x);
-/// Checkfree version of mosGetCh
+/// Checkfree version of @ref mosGetCh
 #define _mosGetCh(img, y, x)		(img->mosaic[(y)][(x)])
 /**
- * Changes a MOSAIC's mos_char's mos_attr, at position y/x
- * 
- * @note If position is outside image boundaries, returns 0 
+ * Changes a MOSAIC's mos_char's attribute, at position y/x
  *
  * @param[in] img Target MOSAIC
  * @param[in] y Y coordinate
  * @param[in] x X coordinate
- * @param[in] a New char attribute
  *
  * @return The mos_attr
  * @return Normal if out of Boundaries, as it's a default value
  */
 mos_attr mosGetAttr (MOSAIC *img, int y, int x);
-/// Checkfree version of mosGetAttr
+/// Checkfree version of @ref mosGetAttr
 #define _mosGetAttr(img, y, x)		(img->attr[(y)][(x)])
 /** 
  * Create a new @ref MOSAIC, allocating the necessary memory
  * 
- * @param[in] img The MOSAIC to be initialized
  * @param[in] new_height New MOSAIC's height
  * @param[in] new_width New MOSAIC's width
  * 

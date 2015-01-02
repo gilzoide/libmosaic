@@ -37,10 +37,20 @@ typedef enum {
 #define DEFAULT_STORAGE_FMT COMPRESSED
 
 /**
+ * Checks if fmt is an available storage format
+ *
+ * @param[in] fmt Format to be tested
+ *
+ * @return 1 if valid
+ * @return 0 otherwise
+ */
+char isValidFormat (attr_storage_fmt fmt);
+
+/**
  * Reads image from the stream pointed to by stream.
  *
  * @note The attr is loaded with Normal attributes even 
- * if we find a unknown attribute storage format
+ * if we find an unknown attribute storage format
  *
  * @param[out] image The image to store what was read
  * @param[in] stream The stream to be read from
@@ -55,6 +65,7 @@ int fgetMOSAIC (MOSAIC *image, FILE *stream);
  * Writes image in the stream pointed to by stream.
  *
  * @param[in] image The image to be saved
+ * @param[in] fmt Compression format to be used
  * @param[out] stream The stream to be written to
  *
  * @return 0 on success
@@ -69,6 +80,7 @@ int fputFmtMOSAIC (MOSAIC *image, attr_storage_fmt fmt, FILE *stream);
  * Saves the image in a file by its name
  * 
  * @param[in] image The image to be saved
+ * @param[in] fmt Compression format to be used
  * @param[in] file_name The new file name
  * 
  * @return 0 on success

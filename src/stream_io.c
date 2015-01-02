@@ -3,6 +3,11 @@
 #include <string.h>
 #include <zlib.h>
 
+char isValidFormat (attr_storage_fmt fmt) {
+	return (fmt == UNCOMPRESSED || fmt == COMPRESSED || fmt == NO_ATTR);
+}
+
+
 /**
  * Compress the MOSAIC for writing it in stream, when using zlib compression
  *
@@ -16,7 +21,7 @@
  * @return 0 on success
  * @return ERR for compression errors
  */
-int compressMOSAIC (MOSAIC *image, attr_storage_fmt fmt, FILE *stream) {
+int compressMOSAIC (MOSAIC *image, FILE *stream) {
 	// accumulator: storage how much space is needed
 	size_t compressed_data_size = 0;
 	// and the zlib's stream
@@ -231,8 +236,14 @@ int fputFmtMOSAIC (MOSAIC *image, attr_storage_fmt fmt, FILE *stream) {
 	// time for binary stuff
 	fputc (SEPARATOR, stream);
 
-	// put the format
-	fputc (fmt, stream);
+	// put the format identifier
+	if (isValidFormat (fmt)) {
+		fputc (fmt, stream);
+	}
+	else {
+		fputc (NO_ATTR, stream);
+		return EUNKNSTRGFMT;
+	}
 
 	// Attr //
 	switch (fmt) {
@@ -244,15 +255,11 @@ int fputFmtMOSAIC (MOSAIC *image, attr_storage_fmt fmt, FILE *stream) {
 
 		// compress with zlib
 		case COMPRESSED:
-			return compressMOSAIC (image, fmt, stream);
+			return compressMOSAIC (image, stream);
 
 		// no attributes, don't do anything =P
 		case NO_ATTR:
 			break;
-
-		// none of the known sorage formats
-		default:
-			return EUNKNSTRGFMT;
 	}
 
 	return 0;
