@@ -5,10 +5,6 @@
 #ifndef IMG_H
 #define IMG_H
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <errno.h>
-
 #include "color.h"
 
 /// Char representation inside MOSAIC

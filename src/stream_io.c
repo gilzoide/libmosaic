@@ -1,6 +1,8 @@
 #include "stream_io.h"
 
+#include <stdio.h>
 #include <string.h>
+#include <errno.h>
 #include <zlib.h>
 
 char isValidFormat (attr_storage_fmt fmt) {

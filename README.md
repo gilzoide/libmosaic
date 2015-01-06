@@ -1,7 +1,7 @@
 Libmosaic
 =========
 
-Mosaic, a ASC Art intended library.
+Mosaic, an open source ASC Art intended library.
 
 Run dependencies: curses (or _ncurses_).
 

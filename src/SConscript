@@ -1,5 +1,5 @@
 # libmosaic build script
-Import (['env', 'curs_env', 'cat_env', 'headers', 'instHeaders'])
+Import (['env', 'curs_env', 'cat_env'])
 
 # the mosaic libraries
 color = curs_env.SharedLibrary ('libmosaic_color', 'color.c')
@@ -15,16 +15,18 @@ Default ([mosaic, curs_mos, color, stream_io, moscat])
 
 ## INSTALL STUFF ##
 # includes -> *.h
-includes = []
-for i in range (len (headers)):
-    includes.append (Command (instHeaders[i], '#include/' + headers[i],
-            Copy ('$TARGET', '$SOURCE')))
+includes = Glob ('#include/*.h')
 
+# pkg-config files -> *.pc
+pkgconfigs = Glob ('#pkgconfigs/*.pc')
 
 curs_env.Install ('/usr/bin', moscat)
 curs_env.Install ('/usr/lib', [mosaic, curs_mos, color, stream_io])
+curs_env.Install ('/usr/include', includes)
+curs_env.Install ('/usr/share/pkgconfig', pkgconfigs)
 # targets: install{,-bin,-lib,-include}
 curs_env.Alias ('install-lib', '/usr/lib')
 curs_env.Alias ('install-bin', '/usr/bin')
 curs_env.Alias ('install-include', '/usr/include')
-curs_env.Alias ('install', ['install-lib', 'install-include', 'install-bin'])
+curs_env.Alias ('install-pkgconfig', '/usr/share/pkgconfig')
+curs_env.Alias ('install', ['install-lib', 'install-include', 'install-bin', 'install-pkgconfig'])

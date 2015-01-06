@@ -11,7 +11,10 @@
  *
  * @note Note also that there are more than one way of keeping the binary part,
  * from uncompressed, to compressed and no binary at all. There's a separator
- * after the text part of the file, which is one of @ref attr_storage_fmt.
+ * after the text part of the file, which is SEPARATOR and one of
+ * @ref attr_storage_fmt.
+ *
+ * @note A .mosv file is a file with multiple mosaics in sequence.
  */
 #ifndef STREAM_IO_H
 #define STREAM_IO_H

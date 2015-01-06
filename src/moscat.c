@@ -3,7 +3,9 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+
 #include "mosaic.h"
 #include "stream_io.h"
 

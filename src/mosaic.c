@@ -1,3 +1,7 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
+
 #include "mosaic.h"
 
 inline int max (int a, int b) {
@@ -144,8 +148,8 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	// realloc the dinamic stuff
 	// Lines
 	// mosaic:
-	if ((img->mosaic = (mos_char**) realloc (
-			img->mosaic, new_height * sizeof (mos_char*))) == NULL) {
+	if ((img->mosaic = (mos_char **) realloc (
+			img->mosaic, new_height * sizeof (mos_char *))) == NULL) {
 		return ERR;
 	}
 	// when growing, initialize lines with NULL, so realloc mallocs them
@@ -153,8 +157,8 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 		img->mosaic[i] = NULL;
 	}
 	// attributes:
-	if ((img->attr = (mos_attr**) realloc (
-			img->attr, new_height * sizeof (mos_attr*))) == NULL) {
+	if ((img->attr = (mos_attr **) realloc (
+			img->attr, new_height * sizeof (mos_attr *))) == NULL) {
 		return ERR;
 	}
 	// when growing, initialize lines with NULL, so realloc mallocs them
@@ -164,11 +168,11 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 
 	// Columns
 	for (i = 0; i < new_height; i++) {
-		if ((img->mosaic[i] = (mos_char*) realloc (
+		if ((img->mosaic[i] = (mos_char *) realloc (
 				img->mosaic[i], new_width * sizeof (mos_char))) == NULL) {
 			return ERR;
 		}
-		if ((img->attr[i] = (mos_attr*) realloc (
+		if ((img->attr[i] = (mos_attr *) realloc (
 				img->attr[i], new_width * sizeof (mos_attr))) == NULL) {
 			return ERR;
 		}
@@ -176,22 +180,18 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	
 	// maybe it grew, so complete with blanks
 	int j;
-	if (old_height > 0 && old_width > 0) {
-		// new lines, until old width
-		int width_limit = min (old_width, old_height);
-		for (i = old_height; i < new_height; i++) {
-			for (j = 0; j < width_limit; j++) {
-				img->mosaic[i][j] = ' ';
-				img->attr[i][j] = Normal;
-			}
+	// new lines, until old width
+	for (i = old_height; i < new_height; i++) {
+		for (j = 0; j < old_width; j++) {
+			img->mosaic[i][j] = ' ';
+			img->attr[i][j] = Normal;
 		}
-		// new columns, until old height
-		int height_limit = min (old_height, old_height);
-		for (i = old_width; i < new_width; i++) {
-			for (j = 0; j < height_limit; j++) {
-				img->mosaic[j][i] = ' ';
-				img->attr[j][i] = Normal;
-			}
+	}
+	// new columns, until old height
+	for (i = old_width; i < new_width; i++) {
+		for (j = 0; j < old_height; j++) {
+			img->mosaic[j][i] = ' ';
+			img->attr[j][i] = Normal;
 		}
 	}
 

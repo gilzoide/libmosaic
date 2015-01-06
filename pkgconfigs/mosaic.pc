@@ -1,0 +1,10 @@
+prefix=/usr
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: mosaic
+Description: Mosaic, an open source Asc Art intended library
+Version: 0.1.0
+Requires.private: mosaic_color
+Cflags: -I${includedir}
+Libs: -L${libdir} -lmosaic

@@ -1,0 +1,10 @@
+prefix=/usr
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: mosaic_color
+Description: Mosaic_color, the color definitions for libmosaic
+Version: 0.1.0
+Requires.private: ncurses
+Cflags: -I${includedir}
+Libs: -L${libdir} -lmosaic_color

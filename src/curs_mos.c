@@ -1,6 +1,8 @@
 #include "curs_mos.h"
 #include "stream_io.h"
 
+#include <stdlib.h>
+
 void InitIMGS (IMGS *imgs) {
 	imgs->list = NULL;
 	imgs->size = 0;
@@ -13,9 +15,9 @@ void CircularIMGS (IMGS *imgs, CURS_MOS *mos) {
 }
 
 
-CURS_MOS *NewCURS_MOS (int new_height, int new_width) {
+CURS_MOS * NewCURS_MOS (int new_height, int new_width) {
 	CURS_MOS *new_image;
-	if ((new_image = (CURS_MOS*) malloc (sizeof (CURS_MOS))) == NULL) {
+	if ((new_image = (CURS_MOS *) malloc (sizeof (CURS_MOS))) == NULL) {
 		return NULL;
 	}
 

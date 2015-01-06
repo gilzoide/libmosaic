@@ -1,0 +1,10 @@
+prefix=/usr
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: mosaic_stream_io
+Description: Mosaic_stream_io, the stream IO definitions for libmosaic
+Version: 0.1.0
+Requires.private: mosaic
+Cflags: -I${includedir}
+Libs: -L${libdir} -lmosaic_stream_io

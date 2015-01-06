@@ -10,31 +10,25 @@ and a cat application (moscat).
 
 You can `scons install` everything in the /usr/{lib,include,bin}/ directories.
 For installing only a part of libmosaic (maybe you want only the shared 
-libraries), you can `scons install-lib` or `scons install-include` or 
-`scons install-bin`.
+libraries), you can `scons install-lib` or `scons install-include` or
+`scons install-pkgconfig` or `scons install-bin`.
 
 Everything can be uninstalled running `scons uninstall`.
 """)
 
 if not GetOption ('help'):
     env = Environment (
-        CCFLAGS = '-Wall -pipe -g -O2',
+        CCFLAGS = '-Wall -pipe -O2',
         CPPPATH = '#include',
         CC = 'gcc',
         LIBS = 'z',
     )
     env.Decider ('MD5-timestamp')
 
-    # if user pass debug=1, add -g flag for the compiler
-    #debug = ARGUMENTS.get ('debug', 0)
-    #if int (debug):
-        #env.Append (CCFLAGS = ' -g')
-    #else:
-        #env.Append (CCFLAGS = ' -O2')
-    
-    # headers and install headers
-    headers = ['mosaic.h', 'color.h', 'curs_mos.h', 'stream_io.h']
-    instHeaders = ['/usr/include/mosaic/' + h for h in headers]
+    # if user pass debug=0, don't add -g flag for the compiler
+    debug = ARGUMENTS.get ('debug', 1)
+    if int (debug):
+        env.Append (CCFLAGS = ' -g')
 
     curs_env = env.Clone (LIBS = ['panel', 'curses'], LIBPATH = ['/usr/lib', 
             '/usr/local/lib'])
@@ -45,9 +39,7 @@ if not GetOption ('help'):
 
     # build mosaic in the 'build' directory, without duplicating
     VariantDir ('build', 'src', duplicate = 0)
-    SConscript ('build/SConscript', exports = ['env', 'curs_env', 'cat_env',
-            'headers', 'instHeaders'])
+    SConscript ('build/SConscript', exports = ['env', 'curs_env', 'cat_env'])
 
     # headers is defined in the SConscript file globally
-    curs_env.Command ("uninstall", None, Delete (FindInstalledFiles () 
-            + instHeaders))
+    curs_env.Command ("uninstall", None, Delete (FindInstalledFiles ()))
