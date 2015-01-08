@@ -19,6 +19,8 @@
 #ifndef STREAM_IO_H
 #define STREAM_IO_H
 
+#include <errno.h>
+
 #include "mosaic.h"
 
 /// Mosi text/binary separator char
@@ -59,7 +61,7 @@ char isValidFormat (attr_storage_fmt fmt);
  * @param[in] stream The stream to be read from
  *
  * @return 0 on success
- * @return _errno_ on failure
+ * @return ERR on failure
  * @return ENODIMENSIONS if no dimensions are present
  * @return EUNKNSTRGFMT if unknown format is found
  */

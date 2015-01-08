@@ -83,35 +83,20 @@ void RefreshCURS_MOS (CURS_MOS *target) {
 }
 
 
-int LoadCURS_MOS (CURS_MOS *target, const char *file_name) {
-	// load the MOSAIC, please
-	int aux = LoadMOSAIC (target->img, file_name);
-
-	if (aux == 0 || aux == EUNKNSTRGFMT) {
-		// resize only target's WINDOW, as the MOSAIC was resized on LoadMOSAIC
-		ResizeCURS_MOS_WINDOW (target, target->img->height, target->img->width);
-		// refreshing
-		RefreshCURS_MOS (target);
-	}
-
-	return aux;
-}
-
-
 void LinkCURS_MOS (CURS_MOS *dest, CURS_MOS *src, enum direction dir) {
 	if (dest != NULL) {
 		CURS_MOS *aux;
-		if (dir == before) {
-			aux = dest->prev;
-			dest->prev = aux->next = src;
-			src->next = dest;
-			src->prev = aux;			
-		}
-		else {		// after
+		if (dir == after) {
 			aux = dest->next;
 			dest->next = aux->prev = src;
 			src->prev = dest;
 			src->next = aux;
+		}
+		else {		// before
+			aux = dest->prev;
+			dest->prev = aux->next = src;
+			src->next = dest;
+			src->prev = aux;			
 		}
 	}
 	else {
@@ -152,9 +137,84 @@ void DisplayCurrentMOSAIC (CURS_MOS *current) {
 }
 
 
+int fgetCURS_MOS (CURS_MOS *target, FILE *stream) {
+	// get the MOSAIC, please
+	int aux = fgetMOSAIC (target->img, stream);
+
+	if (aux == 0 || aux == EUNKNSTRGFMT) {
+		// resize only target's WINDOW, as the MOSAIC was resized on fgetMOSAIC
+		ResizeCURS_MOS_WINDOW (target, target->img->height, target->img->width);
+		// refreshing
+		RefreshCURS_MOS (target);
+	}
+
+	return aux;
+}
+
+
+int LoadCURS_MOS (CURS_MOS *target, const char *file_name) {
+	// load the MOSAIC, please
+	int aux = LoadMOSAIC (target->img, file_name);
+
+	if (aux == 0 || aux == EUNKNSTRGFMT) {
+		// resize only target's WINDOW, as the MOSAIC was resized on LoadMOSAIC
+		ResizeCURS_MOS_WINDOW (target, target->img->height, target->img->width);
+		// refreshing
+		RefreshCURS_MOS (target);
+	}
+
+	return aux;
+}
+
+
+int LoadIMGS (IMGS *imgs, const char *file_name) {
+	FILE *f;
+	if ((f = fopen (file_name, "w")) == NULL) {
+		return errno;
+	}
+	
+	int ret;
+	CURS_MOS *new_image;
+
+	// first CURS_MOS
+	new_image = NewCURS_MOS (0, 0);
+	ret = fgetCURS_MOS (new_image, f);
+	if (ret != 0 && ret != EUNKNSTRGFMT) {
+		fclose (f);
+		return ERR;
+	}
+	CircularIMGS (imgs, new_image);
+
+	// and the others
+	while (1) {
+		new_image = NewCURS_MOS (0, 0);
+		ret = fgetCURS_MOS (new_image, f);
+		if (ret != 0 && ret != EUNKNSTRGFMT) {
+			break;
+		}
+		LinkCURS_MOS (imgs->list->prev, new_image, after);
+	}
+
+	fclose (f);
+
+	return 0;
+}
+
+
 void FreeCURS_MOS (CURS_MOS *image) {
 	FreeMOSAIC (image->img);
 	del_panel (image->pan);
 	delwin (image->win);
 	free (image);
+}
+
+
+void DestroyIMGS (IMGS *everyone) {
+	CURS_MOS *aux, *next;
+	unsigned int i;
+
+	for (aux = everyone->list, i = 0; i < everyone->size; i++, aux = next) {
+		next = aux->next;
+		FreeCURS_MOS (aux);
+	}
 }

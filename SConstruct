@@ -30,8 +30,11 @@ if not GetOption ('help'):
     if int (debug):
         env.Append (CCFLAGS = ' -g')
 
-    curs_env = env.Clone (LIBS = ['panel', 'curses'], LIBPATH = ['/usr/lib', 
-            '/usr/local/lib'])
+    # color needs Curses
+    curs_env = env.Clone (
+        LIBS = ['panel', 'curses'],
+        LIBPATH = ['/usr/lib', '/usr/local/lib'],
+    )
 
     # moscat needs mosaic{,_color}, so link with it as a shared library
     cat_env = env.Clone (LIBS = ['mosaic', 'mosaic_color', 'mosaic_stream_io'],
