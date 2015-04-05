@@ -1,5 +1,5 @@
 prefix=/usr
-includedir=${prefix}/include
+includedir=${prefix}/include/mosaic
 libdir=${prefix}/lib
 
 Name: mosaic_stream_io

@@ -175,11 +175,13 @@ void Tcolor (mos_attr color) {
 	// note that we have to extract the bold before using the colors separately
 	aux[2] = extractBold (&color) ? '1' : '0';
 
-	aux[6] = fg_color_table[GetFore (color)][0];
-	aux[7] = fg_color_table[GetFore (color)][1];
+	if (color < MAX_COLORS) {
+		aux[6] = fg_color_table[GetFore (color)][0];
+		aux[7] = fg_color_table[GetFore (color)][1];
 
-	aux[11] = bg_color_table[GetBack (color)][0];
-	aux[12] = bg_color_table[GetBack (color)][1];
+		aux[11] = bg_color_table[GetBack (color)][0];
+		aux[12] = bg_color_table[GetBack (color)][1];
 
-	printf ("%s", aux);
+		printf ("%s", aux);
+	}
 }

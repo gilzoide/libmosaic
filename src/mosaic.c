@@ -85,7 +85,7 @@ MOSAIC * SubMOSAIC (MOSAIC *parent, int begin_y, int begin_x, int height, int wi
 }
 
 
-int mosAddCh (MOSAIC *img, int y, int x, mos_char c) {
+int mosSetCh (MOSAIC *img, int y, int x, mos_char c) {
 	if (outOfBoundaries (img, y, x)) {
 		return 0;
 	}

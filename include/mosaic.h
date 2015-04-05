@@ -53,9 +53,9 @@ char outOfBoundaries (MOSAIC *img, int y, int x);
  * @return 1 on success
  * @return 0 on out of boundaries
  */
-int mosAddCh (MOSAIC *img, int y, int x, mos_char c);
+int mosSetCh (MOSAIC *img, int y, int x, mos_char c);
 /// Checkfree version of @ref mosAddCh
-#define _mosAddCh(img, y, x, c)		(img->mosaic[(y)][(x)] = (c))
+#define _mosSetCh(img, y, x, c)		(img->mosaic[(y)][(x)] = (c))
 /**
  * Changes a MOSAIC's mos_char's attribute, at position y/x
  *
