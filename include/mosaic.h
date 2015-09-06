@@ -40,7 +40,7 @@ int MOSAICSize (MOSAIC *img);
  * @return 1 if out of boundaries
  * @return 0 otherwise
  */
-char outOfBoundaries (MOSAIC *img, int y, int x);
+char mosOutOfBoundaries (MOSAIC *img, int y, int x);
 
 /**
  * Add a char to the MOSAIC at position y/x

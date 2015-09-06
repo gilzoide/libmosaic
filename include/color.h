@@ -17,9 +17,9 @@ typedef unsigned char mos_attr;
 #define BOLD 0b10000000		///< Bold mask
 
 /**
- *  Extracts the Bold mask from a mos_attr
+ * Extracts the Bold mask from a mos_attr
  *
- * @param[in] attr Target Attr
+ * @param[in|out] attr Target Attr
  *
  * @return BOLD if Bold is on
  * @return 0 otherwise
