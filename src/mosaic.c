@@ -254,7 +254,7 @@ int TrimMOSAIC (MOSAIC *target, char resize) {
 
 	// move the data from mosaic[src_y][src_x] to mosaic[i][j],
 	// but skip if it's already at (0,0)
-	if (ULy && ULx) {
+	if (ULy || ULx) {
 		int src_x, src_y;
 		for (src_y = ULy, i = 0; src_y <= BRy; src_y++, i++) {
 			for (src_x = ULx, j = 0; src_x <= BRx; src_x++, j++) {
