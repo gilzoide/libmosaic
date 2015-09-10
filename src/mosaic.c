@@ -31,7 +31,8 @@ MOSAIC * NewMOSAIC (int new_height, int new_width) {
 	// dimensions still 0
 	img->height = img->width = 0;
 	// NULL pointers, for realloc to work as a malloc
-	img->mosaic = img->attr = NULL;
+	img->mosaic = NULL;
+	img->attr = NULL;
 	// it's not a subMOSAIC
 	img->isSub = 0;
 	
@@ -48,7 +49,7 @@ MOSAIC * NewMOSAIC (int new_height, int new_width) {
 }
 
 
-MOSAIC * SubMOSAIC (MOSAIC *parent, int begin_y, int begin_x, int height, int width) {
+MOSAIC * SubMOSAIC (MOSAIC *parent, int height, int width, int begin_y, int begin_x) {
 	MOSAIC *img = (MOSAIC *) malloc (sizeof (MOSAIC));
 	if (img == NULL) {
 		return NULL;

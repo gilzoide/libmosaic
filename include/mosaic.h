@@ -122,9 +122,9 @@ MOSAIC * NewMOSAIC (int new_height, int new_width);
  * @param[in] width		Inner MOSAIC's width
  *
  * @return SubMOSAIC
- * @return NULL if img is NULL, or if coordinates get out of bounds
+ * @return NULL on allocation errors, or if coordinates get out of bounds
  */
-MOSAIC * SubMOSAIC (MOSAIC *parent, int begin_y, int begin_x, int height, int width);
+MOSAIC * SubMOSAIC (MOSAIC *parent, int height, int width, int begin_y, int begin_x);
 /**
  * Resize a @ref MOSAIC, reallocating the necessary memory
  * 
