@@ -261,6 +261,8 @@ int TrimMOSAIC (MOSAIC *target, char resize) {
 			for (src_x = ULx, j = 0; src_x <= BRx; src_x++, j++) {
 				target->mosaic[i][j] = target->mosaic[src_y][src_x];
 				target->mosaic[src_y][src_x] = ' ';
+				target->attr[i][j] = target->attr[src_y][src_x];
+				target->attr[src_y][src_x] = Normal;
 			}
 		}
 	}
