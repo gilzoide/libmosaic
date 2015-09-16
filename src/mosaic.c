@@ -125,7 +125,6 @@ mos_attr mosGetAttr (MOSAIC *img, int y, int x) {
 	else {
 		return Normal;
 	}
-
 }
 
 

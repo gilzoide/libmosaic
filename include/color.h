@@ -34,7 +34,11 @@ mos_attr extractBold (mos_attr *attr);
  */
 attr_t CursAttr (mos_attr a);
 
-/// Initialize all color combinations in Curses
+/**
+ * Initialize all color combinations in Curses
+ *
+ * @warning This function should be called after Curses::initscr
+ */
 void InitColors ();
 /// A simple test of the color definitions, with Curses as output
 void TestColors_Curses ();
