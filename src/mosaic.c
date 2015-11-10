@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "mosaic.h"
 
@@ -178,29 +179,22 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 	}
 	
 	// maybe it grew, so complete with blanks
-	int j;
 	// new lines, until old width
 	for (i = old_height; i < new_height; i++) {
-		for (j = 0; j < old_width; j++) {
-			img->mosaic[i][j] = ' ';
-			img->attr[i][j] = Normal;
-		}
+		memset (img->mosaic[i], ' ', old_width);
+		memset (img->attr[i], Normal, old_width);
 	}
 	// new columns, until old height
-	for (i = old_width; i < new_width; i++) {
-		for (j = 0; j < old_height; j++) {
-			img->mosaic[j][i] = ' ';
-			img->attr[j][i] = Normal;
-		}
+	for (i = 0; i < old_height; i++) {
+		memset (img->mosaic[i] + old_width, ' ', new_width - old_width);
+		memset (img->attr[i] + old_width, Normal, new_width - old_width);
 	}
 
 	// the other rectangle: from old to new height/width
 	// (for growing on both directions)
 	for (i = old_height; i < new_height; i++) {
-		for (j = old_width; j < new_width; j++) {
-			img->mosaic[i][j] = ' ';
-			img->attr[i][j] = Normal;
-		}
+		memset (img->mosaic[i] + old_width, ' ', new_width - old_width);
+		memset (img->attr[i] + old_width, Normal, new_width - old_width);
 	}
 
 	return 0;
@@ -210,12 +204,14 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 int CopyMOSAIC (MOSAIC *dest, MOSAIC *src) {
 	// no NULL pointers
 	if (dest && src) {
-		int i, j;
+		int i, minWidth = min (dest->width, src->width);
 		for (i = 0; i < min (dest->height, src->height); i++) {
-			for (j = 0; j < min (dest->width, src->width); j++) {
-				dest->mosaic[i][j] = src->mosaic[i][j];
-				dest->attr[i][j] = src->attr[i][j];
-			}
+			memcpy (dest->mosaic[i], src->mosaic[i], minWidth);
+			memcpy (dest->attr[i], src->attr[i], minWidth);
+			/*for (j = 0; j < min (dest->width, src->width); j++) {*/
+				/*dest->mosaic[i][j] = src->mosaic[i][j];*/
+				/*dest->attr[i][j] = src->attr[i][j];*/
+			/*}*/
 		}
 
 		return 0;
