@@ -185,16 +185,20 @@ int ResizeMOSAIC (MOSAIC *img, int new_height, int new_width) {
 		memset (img->attr[i], Normal, old_width);
 	}
 	// new columns, until old height
-	for (i = 0; i < old_height; i++) {
-		memset (img->mosaic[i] + old_width, ' ', new_width - old_width);
-		memset (img->attr[i] + old_width, Normal, new_width - old_width);
+	if (new_width > old_width) {
+		for (i = 0; i < old_height; i++) {
+			memset (img->mosaic[i] + old_width, ' ', new_width - old_width);
+			memset (img->attr[i] + old_width, Normal, new_width - old_width);
+		}
 	}
 
 	// the other rectangle: from old to new height/width
 	// (for growing on both directions)
-	for (i = old_height; i < new_height; i++) {
-		memset (img->mosaic[i] + old_width, ' ', new_width - old_width);
-		memset (img->attr[i] + old_width, Normal, new_width - old_width);
+	if (new_width > old_width) {
+		for (i = old_height; i < new_height; i++) {
+			memset (img->mosaic[i] + old_width, ' ', new_width - old_width);
+			memset (img->attr[i] + old_width, Normal, new_width - old_width);
+		}
 	}
 
 	return 0;
