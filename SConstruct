@@ -6,7 +6,7 @@ Welcome to the libmosaic's build script
 
 The default build output is the build/ directory.
 This package provide the shared libraries for mosaic,
-and a cat application (moscat).
+and a cat application (moscat). Call with `debug=1` for a debug build.
 
 You can `scons install` everything in the /usr/{lib,include,bin}/ directories.
 For installing only a part of libmosaic (maybe you want only the shared 
@@ -25,8 +25,8 @@ if not GetOption ('help'):
     )
     env.Decider ('MD5-timestamp')
 
-    # if user pass debug=0, don't add -g flag for the compiler
-    debug = ARGUMENTS.get ('debug', 1)
+    # if user pass debug=1, add -g flag for the compiler
+    debug = ARGUMENTS.get ('debug', 0)
     if int (debug):
         env.Append (CCFLAGS = ' -g')
 
