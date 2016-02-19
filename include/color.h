@@ -6,15 +6,17 @@
 #define COLOR_H
 
 #include <curses.h>
+#include <stdint.h>
 
 /**
  * Attribute used by Mosaic.
  *
  * It's bits are masked, from most to less significative as the color 
- * (7 bits), bold (1 bit on/off).
+ * (7 bits), bold (1 bit on/off), underline (1 bit on/off).
  */
-typedef unsigned char mos_attr;
-#define BOLD 0b10000000		///< Bold mask
+typedef uint16_t mos_attr;
+#define BOLD		0b010000000	///< Bold mask
+#define UNDERLINE	0b100000000	///< Underline mask
 
 /**
  * Extracts the Bold mask from a mos_attr
@@ -25,6 +27,15 @@ typedef unsigned char mos_attr;
  * @return 0 otherwise
  */
 mos_attr extractBold (mos_attr *attr);
+/**
+ * Extracts the Underline mask from a mos_attr
+ *
+ * @param[in|out] attr Target Attr
+ *
+ * @return UNDERLINE if Underline is on
+ * @return 0 otherwise
+ */
+mos_attr extractUnderline (mos_attr *attr);
 
 /**
  * Converts between Attr and the Curses attr_t.

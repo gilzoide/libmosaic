@@ -11,10 +11,23 @@ mos_attr extractBold (mos_attr *attr) {
 }
 
 
+mos_attr extractUnderline (mos_attr *attr) {
+	// check if it was bold
+	mos_attr underline = *attr & UNDERLINE;
+
+	// de-bolderize it
+	*attr &= ~UNDERLINE;
+
+	return underline;
+}
+
+
 attr_t CursAttr (mos_attr a) {
 	mos_attr bold = extractBold (&a);
+	mos_attr underline = extractBold (&a);
 
-	attr_t value = bold ? A_BOLD : A_NORMAL;
+	attr_t value = (bold ? A_BOLD : A_NORMAL) |
+			(underline ? A_UNDERLINE : A_NORMAL);
 
 	return (value | COLOR_PAIR (a));
 }
@@ -138,6 +151,17 @@ void TestColors_Curses () {
 		}
 		refresh ();
 	}
+	// Underline chars!
+	addstr ("Underline\n");
+	for (i = Normal; i <= WW; i++) {
+		attron (COLOR_PAIR (i) | A_UNDERLINE);
+		addch ('U');
+		if (i % COLORS_STEP == COLORS_STEP - 1) {
+			attron (COLOR_PAIR (Normal));
+			addch ('\n');
+		}
+		refresh ();
+	}
 }
 
 
@@ -163,25 +187,36 @@ void TestColors_Stdout () {
 			putchar ('\n');
 		}
 	}
+	Tcolor (Normal);
+	// Underline chars!
+	puts ("Underline");
+	for (i = Normal; i <= WW; i++) {
+		Tcolor (i + UNDERLINE);
+		putchar ('U');
+		if (i % COLORS_STEP == COLORS_STEP - 1) {
+			Tcolor (Normal);
+			putchar ('\n');
+		}
+	}
 }
 
 
 void Tcolor (mos_attr color) {
 	char *fg_color_table[] = {"39", "30", "31", "32", "33", "34", "35", "36", "37"};
 	char *bg_color_table[] = {"49", "40", "41", "42", "43", "44", "45", "46", "47"};
-	char aux[] = "\e[ m\e[  m\e[  m";
 
 	// they told me it may be bold, so write it also
 	// note that we have to extract the bold before using the colors separately
-	aux[2] = extractBold (&color) ? '1' : '0';
+	mos_attr bold = extractBold (&color);
+	// underline, likewise
+	mos_attr underline = extractUnderline (&color);
 
 	if (color < MAX_COLORS) {
-		aux[6] = fg_color_table[GetFore (color)][0];
-		aux[7] = fg_color_table[GetFore (color)][1];
-
-		aux[11] = bg_color_table[GetBack (color)][0];
-		aux[12] = bg_color_table[GetBack (color)][1];
-
-		printf ("%s", aux);
+		printf ("\e[0m\e[%s;%s%s%sm",
+				fg_color_table[GetFore (color)],
+				bg_color_table[GetBack (color)],
+				bold ? ";1" : "",
+				underline ? ";4" : ""
+				);
 	}
 }

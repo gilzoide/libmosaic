@@ -34,24 +34,23 @@ int compressMOSAIC (MOSAIC *image, FILE *stream) {
 		return ERR;
 	}
 
-#define CHUNK (image->width)
+#define CHUNK (image->width * sizeof (mos_attr))
 	// write each attr line
 	char loop = 1;
 	int i, flush = Z_NO_FLUSH;
 	mos_attr out[MOSAICSize (image)];
-	mos_attr *aux = out;
+	Bytef *aux = (Bytef *) out;
 	for (i = 0; loop; i++) {
 		if (i == image->height - 1) {
 			loop = 0;
 			flush = Z_FINISH;
 		}
 		strm.avail_in = CHUNK;
-		strm.next_in = image->attr[i];
-
+		strm.next_in = (Bytef *) image->attr[i];
 
 		do {
 			strm.avail_out = CHUNK;
-			strm.next_out = aux;
+			strm.next_out = (Bytef *) aux;
 
 			if (deflate (&strm, flush) == Z_STREAM_ERROR) {
 				deflateEnd (&strm);
@@ -106,10 +105,10 @@ int uncompressMOSAIC (MOSAIC *image, FILE *stream) {
 	fread (&compressed_data_size, sizeof (size_t), 1, stream);
 	// read it all to `in', and inflate to `out'
 	strm.avail_in = fread (in, sizeof (char), compressed_data_size, stream);
-	strm.next_in = in;
+	strm.next_in = (Bytef *) in;
 
-	strm.avail_out = MOSAICSize (image);
-	strm.next_out = out;
+	strm.avail_out = MOSAICSize (image) * sizeof (mos_attr);
+	strm.next_out = (Bytef *) out;
 
 	if (inflate (&strm, Z_NO_FLUSH) == Z_STREAM_ERROR) {
 		inflateEnd (&strm);
