@@ -5,7 +5,7 @@ Help ("""
 Welcome to the libmosaic's build script
 
 The default build output is the build/ directory.
-This package provide the shared libraries for mosaic,
+This package provides the shared libraries for mosaic,
 and a cat application (moscat). Call with `debug=1` for a debug build.
 
 You can `scons install` everything in the /usr/{lib,include,bin}/ directories.
