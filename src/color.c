@@ -12,10 +12,10 @@ mos_attr extractBold (mos_attr *attr) {
 
 
 mos_attr extractUnderline (mos_attr *attr) {
-	// check if it was bold
+	// check if it was underlined
 	mos_attr underline = *attr & UNDERLINE;
 
-	// de-bolderize it
+	// de-underline it
 	*attr &= ~UNDERLINE;
 
 	return underline;
@@ -24,10 +24,9 @@ mos_attr extractUnderline (mos_attr *attr) {
 
 attr_t CursAttr (mos_attr a) {
 	mos_attr bold = extractBold (&a);
-	mos_attr underline = extractBold (&a);
+	mos_attr underline = extractUnderline (&a);
 
-	attr_t value = (bold ? A_BOLD : A_NORMAL) |
-			(underline ? A_UNDERLINE : A_NORMAL);
+	attr_t value = (bold ? A_BOLD : 0) | (underline ? A_UNDERLINE : 0);
 
 	return (value | COLOR_PAIR (a));
 }
