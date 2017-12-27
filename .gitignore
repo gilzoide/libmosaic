@@ -3,8 +3,6 @@
 *.swp
 # build stuff
 build/*
-# scons stuff
-*scons*
 # ctags/cscope
 cscope*
 ctags

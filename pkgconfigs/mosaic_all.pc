@@ -1,8 +1,0 @@
-prefix=/usr
-includedir=${prefix}/include/mosaic
-libdir=${prefix}/lib
-
-Name: mosaic_all
-Description: Mosaic, an open source Asc Art intended library - All packages
-Version: 0.1.0
-Requires: mosaic mosaic_color mosaic_stream_io
