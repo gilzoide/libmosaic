@@ -13,6 +13,7 @@ var menudata={children:[
 {text:"f",url:"globals.html#index_f"},
 {text:"m",url:"globals.html#index_m"}]},
 {text:"Functions",url:"globals_func.html"},
+{text:"Variables",url:"globals_vars.html"},
 {text:"Typedefs",url:"globals_type.html"},
 {text:"Enumerations",url:"globals_enum.html"},
 {text:"Enumerator",url:"globals_eval.html"},

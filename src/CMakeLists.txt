@@ -8,7 +8,7 @@ if(ENABLE_ZLIB)
 endif()
 
 # Library
-set(mosaic_src attr.c image.c io.c)
+set(mosaic_src attr.c error.c image.c io.c)
 add_library(mosaic SHARED ${mosaic_src})
 
 # Moscat utility

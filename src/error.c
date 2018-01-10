@@ -18,37 +18,14 @@
  * Any bugs should be reported to <gilzoide@gmail.com>
  */
 
-/** @file error.h
- * Libmosaic error codes.
- */
+#include "mosaic/error.h"
 
-#ifndef __MOSAIC_ERROR_H__
-#define __MOSAIC_ERROR_H__
-
-/**
- * Numeric error codes returned by Mosaic functions.
- */
-typedef enum {
-	/// No error at all.
-	MOS_OK            = 0,
-	/// `malloc` error.
-	MOS_EMALLOC       = -1,
-	/// Dimension header was not found when reading from file.
-	MOS_ENODIMENSIONS = -2,
-	/// Unknown attribute storage format when reading from file.
-	MOS_EUNKNSTRGFMT  = -3,
-	/// Compression error.
-	MOS_ECOMPRESSION  = -4,
-	/// Unsupported operation.
-	MOS_EUNSUPPORTED  = -5,
-} mos_error;
-
-/**
- * String description of the error codes.
- *
- * @see mos_error
- */
-extern const char * const mos_error_description[];
-
-#endif
+const char * const mos_error_description[] = {
+	"No error",
+	"Allocation error",
+	"Dimension header was not found",
+	"Unknown attribute storage format",
+	"Compression error",
+	"Unsupported operation",
+};
 

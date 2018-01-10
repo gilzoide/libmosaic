@@ -15,6 +15,7 @@ var searchData=
   ['mos_5femalloc',['MOS_EMALLOC',['../error_8h.html#a76aa1946ad1c21ee1edb7fb242f39b3bacf315fd6e18506096a2d2e87503ae32a',1,'error.h']]],
   ['mos_5fenodimensions',['MOS_ENODIMENSIONS',['../error_8h.html#a76aa1946ad1c21ee1edb7fb242f39b3ba33c5b8a1472aac05768f59c62de5d7d2',1,'error.h']]],
   ['mos_5ferror',['mos_error',['../error_8h.html#a76aa1946ad1c21ee1edb7fb242f39b3b',1,'error.h']]],
+  ['mos_5ferror_5fdescription',['mos_error_description',['../error_8h.html#a0d41218e8f401b3ec3b8c721b6140150',1,'error.h']]],
   ['mos_5feunknstrgfmt',['MOS_EUNKNSTRGFMT',['../error_8h.html#a76aa1946ad1c21ee1edb7fb242f39b3ba2feac7b235ef18ad91d6ae9730a3fe5c',1,'error.h']]],
   ['mos_5feunsupported',['MOS_EUNSUPPORTED',['../error_8h.html#a76aa1946ad1c21ee1edb7fb242f39b3bae1019d4a434bc7e708b6fb397a41cd30',1,'error.h']]],
   ['mos_5ffree',['mos_free',['../image_8h.html#a668fa45365a70af5c5957a3f0a6b56d5',1,'image.h']]],

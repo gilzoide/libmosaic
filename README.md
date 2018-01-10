@@ -26,6 +26,7 @@ From build directory:
 
 Change Log
 ----------
++ 1.1.1 - Added error code string descriptions.
 + 1.1.0 - Clone function, `is_inbounds` instead of `out_of_bounds` (makes more
   sense), `NULL` pointer check on `mos_free`.
 + 1.0.0 - Refactored, image creation, 8 basic colors + bold and underline,
