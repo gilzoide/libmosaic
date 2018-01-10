@@ -2,7 +2,10 @@ var searchData=
 [
   ['mos_5fclone',['mos_clone',['../image_8h.html#ae5d8afbbb25aad67978cb7a8ff5239dd',1,'image.h']]],
   ['mos_5fcopy',['mos_copy',['../image_8h.html#ac6196dc1c244d0c01a64e6937e13f72e',1,'image.h']]],
+  ['mos_5ferase',['mos_erase',['../image_8h.html#ada2946fd3656c3d0782d5724e21c36dd',1,'image.h']]],
   ['mos_5ffget',['mos_fget',['../io_8h.html#ac3bb826781d0c9f122a687e18d484fda',1,'io.h']]],
+  ['mos_5ffill_5fattr',['mos_fill_attr',['../image_8h.html#a14a827c1e91aa6b0243e499c84344e7f',1,'image.h']]],
+  ['mos_5ffill_5fchar',['mos_fill_char',['../image_8h.html#a27bd892cb0cb36e26fee71e27ae0eb4e',1,'image.h']]],
   ['mos_5ffput',['mos_fput',['../io_8h.html#a48af4b04749428a6253b41338ca5ef79',1,'io.h']]],
   ['mos_5ffree',['mos_free',['../image_8h.html#a668fa45365a70af5c5957a3f0a6b56d5',1,'image.h']]],
   ['mos_5fget_5fattr',['mos_get_attr',['../image_8h.html#aa052ac150f8a27f1cbbbf339137c4b9f',1,'image.h']]],

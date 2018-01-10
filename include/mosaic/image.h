@@ -136,6 +136,31 @@ mos_char mos_get_char(const MOSAIC *img, int y, int x);
 mos_attr mos_get_attr(const MOSAIC *img, int y, int x);
 
 /**
+ * Fill an entire MOSAIC with the same character.
+ *
+ * This is useful when erasing a MOSAIC's contents.
+ *
+ * @param[in] img Target MOSAIC.
+ * @param[in] c   Character for filling.
+ */
+void mos_fill_char(MOSAIC *img, mos_char c);
+/**
+ * Fill an entire MOSAIC with the same attribute.
+ *
+ * This is useful when erasing a MOSAIC's contents.
+ *
+ * @param[in] img Target MOSAIC.
+ * @param[in] a   Attribute for filling.
+ */
+void mos_fill_attr(MOSAIC *img, mos_attr a);
+/**
+ * Erase a MOSAIC's contents with the default values.
+ *
+ * @param[in] img Target MOSAIC.
+ */
+void mos_erase(MOSAIC *img);
+
+/**
  * Gets a MOSAIC inside a MOSAIC: MOSAICception!
  *
  * @note SubMOSAICs share memory with their parent MOSAIC, so

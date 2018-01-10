@@ -113,6 +113,28 @@ mos_attr mos_get_attr(const MOSAIC *img, int y, int x) {
 }
 
 
+void mos_fill_char(MOSAIC *img, mos_char c) {
+	int i;
+	for(i = 0; i < img->height; i++) {
+		memset(img->mosaic[i], c, img->width * sizeof(mos_char));
+	}
+}
+
+
+void mos_fill_attr(MOSAIC *img, mos_attr a) {
+	int i;
+	for(i = 0; i < img->height; i++) {
+		memset(img->attr[i], a, img->width * sizeof(mos_attr));
+	}
+}
+
+
+void mos_erase(MOSAIC *img) {
+	mos_fill_char(img, MOS_DEFAULT_CHAR);
+	mos_fill_attr(img, MOS_DEFAULT_ATTR);
+}
+
+
 int mos_resize(MOSAIC *img, int new_height, int new_width) {
 	// old dimensions
 	const int old_height = img->height;
