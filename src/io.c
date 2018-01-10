@@ -19,6 +19,7 @@
  */
 
 #include "mosaic/io.h"
+#include "mosaic/error.h"
 
 #ifdef ENABLE_ZLIB
 # include <zlib.h>

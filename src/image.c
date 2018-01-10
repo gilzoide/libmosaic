@@ -33,8 +33,8 @@ static inline int min(int a, int b) {
 	return (a < b ? a : b);
 }
 
-int mos_out_of_bounds(const MOSAIC *img, int y, int x) {
-	return (y < 0 || y >= img->height || x < 0 || x >= img->width);
+int mos_is_inbounds(const MOSAIC *img, int y, int x) {
+	return y >= 0 && y < img->height && x >= 0 || x < img->width;
 }
 
 MOSAIC *mos_new(int height, int width) {
@@ -184,6 +184,14 @@ void mos_copy(MOSAIC *dest, MOSAIC *src) {
 	}
 }
 
+MOSAIC *mos_clone(MOSAIC *src) {
+	MOSAIC *clone;
+	if(clone = mos_new(src->height, src->width)) {
+		mos_copy(clone, src);
+	}
+	return clone;
+}
+
 
 int mos_trim(MOSAIC *target, char resize) {
 	// Rectangle containing the mosaic without blank lines/columns
@@ -233,18 +241,20 @@ int mos_trim(MOSAIC *target, char resize) {
 
 
 void mos_free(MOSAIC *img) {
-	// only free the mosaic/attr if img is an 
-	// independent MOSAIC (not a subMOSAIC)
-	if(!img->is_sub) {
-		int i;
-		for(i = 0; i < img->height; i++) {
-			free(img->attr[i]);
-			free(img->mosaic[i]);
+	if(img) {
+		// only free the mosaic/attr if img is an 
+		// independent MOSAIC (not a subMOSAIC)
+		if(!img->is_sub) {
+			int i;
+			for(i = 0; i < img->height; i++) {
+				free(img->attr[i]);
+				free(img->mosaic[i]);
+			}
 		}
+
+		free(img->attr);
+		free(img->mosaic);
+
+		free(img);
 	}
-
-	free(img->attr);
-	free(img->mosaic);
-
-	free(img);
 }

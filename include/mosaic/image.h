@@ -25,7 +25,7 @@
 #ifndef __MOSAIC_IMAGE_H__
 #define __MOSAIC_IMAGE_H__
 
-#include <stdint.h>
+#include "attr.h"
 
 /**
  * Char representation inside a MOSAIC.
@@ -60,7 +60,9 @@ typedef struct {
 MOSAIC *mos_new(int height, int width);
 
 /**
- * Destroy an image, deallocating the memory used
+ * Destroy an image, deallocating the memory used.
+ *
+ * It is safe to pass a NULL pointer here.
  */
 void mos_free(MOSAIC *img);
 
@@ -74,16 +76,18 @@ void mos_free(MOSAIC *img);
 int mos_size(const MOSAIC *img);
 
 /**
- * Checks whether a y/x point is in or out of img's boundaries
+ * Checks whether a y/x point is inside of img's boundaries.
+ *
+ * @note Point is 0-indexed.
  *
  * @param[in] img Target MOSAIC
  * @param[in] y   Y coordinate
  * @param[in] x   X coordinate
  *
- * @return 1 if out of boundaries
+ * @return 1 if inside boundaries
  * @return 0 otherwise
  */
-int mos_out_of_bounds(const MOSAIC *img, int y, int x);
+int mos_is_inbounds(const MOSAIC *img, int y, int x);
 
 /**
  * Add a char to the MOSAIC at position y/x
@@ -164,7 +168,7 @@ MOSAIC *mos_submosaic(MOSAIC *parent, int height, int width, int begin_y, int be
 int mos_resize(MOSAIC *img, int new_height, int new_width);
 
 /**
- * Clone a MOSAIC, from _src_ to _dest_
+ * Copy the contents of a MOSAIC, from _src_ to _dest_.
  *
  * @note If _dest_'s width or height are less than _src_'s,
  * the MOSAIC is truncated
@@ -173,6 +177,15 @@ int mos_resize(MOSAIC *img, int new_height, int new_width);
  * @param[in] src   Source MOSAIC
  */
 void mos_copy(MOSAIC *dest, MOSAIC *src);
+
+/**
+ * Clone a MOSAIC, deep copying it's contents.
+ *
+ * @param[in] src Source MOSAIC
+ *
+ * @return `src` clone
+ */
+MOSAIC *mos_clone(MOSAIC *src);
 
 /**
  * Trim a MOSAIC's blank area in each side of target

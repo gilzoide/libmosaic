@@ -92,7 +92,7 @@ $(document).ready(function(){initNavTree('image_8h.html','');});
 
 <p>Mosaic image format and operations.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="attr_8h_source.html">attr.h</a>&quot;</code><br />
 </div>
 <p><a href="image_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -125,16 +125,15 @@ Functions</h2></td></tr>
 <tr class="memitem:aadb5cbd963a24ffe5e16c082b234744f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structMOSAIC.html">MOSAIC</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#aadb5cbd963a24ffe5e16c082b234744f">mos_new</a> (int height, int width)</td></tr>
 <tr class="memdesc:aadb5cbd963a24ffe5e16c082b234744f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a new <a class="el" href="structMOSAIC.html">MOSAIC</a>, allocating the necessary memory.  <a href="#aadb5cbd963a24ffe5e16c082b234744f">More...</a><br /></td></tr>
 <tr class="separator:aadb5cbd963a24ffe5e16c082b234744f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a668fa45365a70af5c5957a3f0a6b56d5"><td class="memItemLeft" align="right" valign="top"><a id="a668fa45365a70af5c5957a3f0a6b56d5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a668fa45365a70af5c5957a3f0a6b56d5">mos_free</a> (<a class="el" href="structMOSAIC.html">MOSAIC</a> *img)</td></tr>
-<tr class="memdesc:a668fa45365a70af5c5957a3f0a6b56d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy an image, deallocating the memory used. <br /></td></tr>
+<tr class="memitem:a668fa45365a70af5c5957a3f0a6b56d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a668fa45365a70af5c5957a3f0a6b56d5">mos_free</a> (<a class="el" href="structMOSAIC.html">MOSAIC</a> *img)</td></tr>
+<tr class="memdesc:a668fa45365a70af5c5957a3f0a6b56d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy an image, deallocating the memory used.  <a href="#a668fa45365a70af5c5957a3f0a6b56d5">More...</a><br /></td></tr>
 <tr class="separator:a668fa45365a70af5c5957a3f0a6b56d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf4a375b83c455cf15f80a13141a384b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#adf4a375b83c455cf15f80a13141a384b">mos_size</a> (const <a class="el" href="structMOSAIC.html">MOSAIC</a> *img)</td></tr>
 <tr class="memdesc:adf4a375b83c455cf15f80a13141a384b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Measures the total size of an image.  <a href="#adf4a375b83c455cf15f80a13141a384b">More...</a><br /></td></tr>
 <tr class="separator:adf4a375b83c455cf15f80a13141a384b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa241334161babb9dd81fd1595696562"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#aaa241334161babb9dd81fd1595696562">mos_out_of_bounds</a> (const <a class="el" href="structMOSAIC.html">MOSAIC</a> *img, int y, int x)</td></tr>
-<tr class="memdesc:aaa241334161babb9dd81fd1595696562"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a y/x point is in or out of img's boundaries.  <a href="#aaa241334161babb9dd81fd1595696562">More...</a><br /></td></tr>
-<tr class="separator:aaa241334161babb9dd81fd1595696562"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a138b2a389a55373098bb5f0962135efe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#a138b2a389a55373098bb5f0962135efe">mos_is_inbounds</a> (const <a class="el" href="structMOSAIC.html">MOSAIC</a> *img, int y, int x)</td></tr>
+<tr class="memdesc:a138b2a389a55373098bb5f0962135efe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a y/x point is inside of img's boundaries.  <a href="#a138b2a389a55373098bb5f0962135efe">More...</a><br /></td></tr>
+<tr class="separator:a138b2a389a55373098bb5f0962135efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6f347560a795dc5e3111d35a9033e6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="image_8h.html#adce29abac590206a70704a2ed33ae773">mos_char</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#ad6f347560a795dc5e3111d35a9033e6f">mos_set_char</a> (<a class="el" href="structMOSAIC.html">MOSAIC</a> *img, int y, int x, <a class="el" href="image_8h.html#adce29abac590206a70704a2ed33ae773">mos_char</a> c)</td></tr>
 <tr class="memdesc:ad6f347560a795dc5e3111d35a9033e6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a char to the <a class="el" href="structMOSAIC.html" title="&quot;Image&quot; in MOSAIC format. ">MOSAIC</a> at position y/x.  <a href="#ad6f347560a795dc5e3111d35a9033e6f">More...</a><br /></td></tr>
 <tr class="separator:ad6f347560a795dc5e3111d35a9033e6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,8 +153,11 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="imag
 <tr class="memdesc:aa5ca66b0d8e8e91b6bf317f8422b6d5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resize a <a class="el" href="structMOSAIC.html">MOSAIC</a>, reallocating the necessary memory.  <a href="#aa5ca66b0d8e8e91b6bf317f8422b6d5c">More...</a><br /></td></tr>
 <tr class="separator:aa5ca66b0d8e8e91b6bf317f8422b6d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6196dc1c244d0c01a64e6937e13f72e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#ac6196dc1c244d0c01a64e6937e13f72e">mos_copy</a> (<a class="el" href="structMOSAIC.html">MOSAIC</a> *dest, <a class="el" href="structMOSAIC.html">MOSAIC</a> *src)</td></tr>
-<tr class="memdesc:ac6196dc1c244d0c01a64e6937e13f72e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clone a <a class="el" href="structMOSAIC.html" title="&quot;Image&quot; in MOSAIC format. ">MOSAIC</a>, from <em>src</em> to <em>dest</em>  <a href="#ac6196dc1c244d0c01a64e6937e13f72e">More...</a><br /></td></tr>
+<tr class="memdesc:ac6196dc1c244d0c01a64e6937e13f72e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy the contents of a <a class="el" href="structMOSAIC.html" title="&quot;Image&quot; in MOSAIC format. ">MOSAIC</a>, from <em>src</em> to <em>dest</em>.  <a href="#ac6196dc1c244d0c01a64e6937e13f72e">More...</a><br /></td></tr>
 <tr class="separator:ac6196dc1c244d0c01a64e6937e13f72e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5d8afbbb25aad67978cb7a8ff5239dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structMOSAIC.html">MOSAIC</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#ae5d8afbbb25aad67978cb7a8ff5239dd">mos_clone</a> (<a class="el" href="structMOSAIC.html">MOSAIC</a> *src)</td></tr>
+<tr class="memdesc:ae5d8afbbb25aad67978cb7a8ff5239dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clone a <a class="el" href="structMOSAIC.html" title="&quot;Image&quot; in MOSAIC format. ">MOSAIC</a>, deep copying it's contents.  <a href="#ae5d8afbbb25aad67978cb7a8ff5239dd">More...</a><br /></td></tr>
+<tr class="separator:ae5d8afbbb25aad67978cb7a8ff5239dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2b04641fd5345a01183742b89b2b151"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="image_8h.html#ac2b04641fd5345a01183742b89b2b151">mos_trim</a> (<a class="el" href="structMOSAIC.html">MOSAIC</a> *target, char resize)</td></tr>
 <tr class="memdesc:ac2b04641fd5345a01183742b89b2b151"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trim a <a class="el" href="structMOSAIC.html" title="&quot;Image&quot; in MOSAIC format. ">MOSAIC</a>'s blank area in each side of target.  <a href="#ac2b04641fd5345a01183742b89b2b151">More...</a><br /></td></tr>
 <tr class="separator:ac2b04641fd5345a01183742b89b2b151"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -203,6 +205,27 @@ NULL if allocation failed </dd></dl>
 
 </div>
 </div>
+<a id="a668fa45365a70af5c5957a3f0a6b56d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a668fa45365a70af5c5957a3f0a6b56d5">&#9670;&nbsp;</a></span>mos_free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mos_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structMOSAIC.html">MOSAIC</a> *&#160;</td>
+          <td class="paramname"><em>img</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destroy an image, deallocating the memory used. </p>
+<p>It is safe to pass a NULL pointer here. </p>
+
+</div>
+</div>
 <a id="adf4a375b83c455cf15f80a13141a384b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adf4a375b83c455cf15f80a13141a384b">&#9670;&nbsp;</a></span>mos_size()</h2>
 
@@ -230,14 +253,14 @@ NULL if allocation failed </dd></dl>
 
 </div>
 </div>
-<a id="aaa241334161babb9dd81fd1595696562"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa241334161babb9dd81fd1595696562">&#9670;&nbsp;</a></span>mos_out_of_bounds()</h2>
+<a id="a138b2a389a55373098bb5f0962135efe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a138b2a389a55373098bb5f0962135efe">&#9670;&nbsp;</a></span>mos_is_inbounds()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int mos_out_of_bounds </td>
+          <td class="memname">int mos_is_inbounds </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structMOSAIC.html">MOSAIC</a> *&#160;</td>
           <td class="paramname"><em>img</em>, </td>
@@ -262,7 +285,8 @@ NULL if allocation failed </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Checks whether a y/x point is in or out of img's boundaries. </p>
+<p>Checks whether a y/x point is inside of img's boundaries. </p>
+<dl class="section note"><dt>Note</dt><dd>Point is 0-indexed.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">img</td><td>Target <a class="el" href="structMOSAIC.html" title="&quot;Image&quot; in MOSAIC format. ">MOSAIC</a> </td></tr>
@@ -271,7 +295,7 @@ NULL if allocation failed </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>1 if out of boundaries </dd>
+<dl class="section return"><dt>Returns</dt><dd>1 if inside boundaries </dd>
 <dd>
 0 otherwise </dd></dl>
 
@@ -608,7 +632,7 @@ NULL on allocation errors </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Clone a <a class="el" href="structMOSAIC.html" title="&quot;Image&quot; in MOSAIC format. ">MOSAIC</a>, from <em>src</em> to <em>dest</em> </p>
+<p>Copy the contents of a <a class="el" href="structMOSAIC.html" title="&quot;Image&quot; in MOSAIC format. ">MOSAIC</a>, from <em>src</em> to <em>dest</em>. </p>
 <dl class="section note"><dt>Note</dt><dd>If <em>dest</em>'s width or height are less than <em>src</em>'s, the <a class="el" href="structMOSAIC.html" title="&quot;Image&quot; in MOSAIC format. ">MOSAIC</a> is truncated</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -617,6 +641,33 @@ NULL on allocation errors </dd></dl>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ae5d8afbbb25aad67978cb7a8ff5239dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5d8afbbb25aad67978cb7a8ff5239dd">&#9670;&nbsp;</a></span>mos_clone()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structMOSAIC.html">MOSAIC</a>* mos_clone </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structMOSAIC.html">MOSAIC</a> *&#160;</td>
+          <td class="paramname"><em>src</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clone a <a class="el" href="structMOSAIC.html" title="&quot;Image&quot; in MOSAIC format. ">MOSAIC</a>, deep copying it's contents. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Source <a class="el" href="structMOSAIC.html" title="&quot;Image&quot; in MOSAIC format. ">MOSAIC</a></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>src</code> clone </dd></dl>
 
 </div>
 </div>
@@ -667,7 +718,7 @@ NULL on allocation errors </dd></dl>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_175e8fbecd029d4b76b5c7f40ac7265a.html">mosaic</a></li><li class="navelem"><a class="el" href="image_8h.html">image.h</a></li>
-    <li class="footer">Generated on Wed Dec 27 2017 16:31:00 for Mosaic by
+    <li class="footer">Generated on Tue Jan 9 2018 23:39:35 for Mosaic by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

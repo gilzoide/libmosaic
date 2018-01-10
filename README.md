@@ -23,3 +23,11 @@ From build directory:
 
 	$ make install
 
+
+Change Log
+----------
++ 1.1.0 - Clone function, `is_inbounds` instead of `out_of_bounds` (makes more
+  sense), `NULL` pointer check on `mos_free`.
++ 1.0.0 - Refactored, image creation, 8 basic colors + bold and underline,
+  simple `FILE` I/O.
+

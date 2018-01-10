@@ -37,7 +37,7 @@
 #ifndef __MOSAIC_IO_H_
 #define __MOSAIC_IO_H_
 
-#include "mosaic.h"
+#include "image.h"
 
 #include <stdio.h>
 
