@@ -26,6 +26,7 @@ From build directory:
 
 Change Log
 ----------
++ 1.2.0 - Renamed I/O stream functions with `mos_` prefix.
 + 1.1.1 - Added error code string descriptions.
 + 1.1.0 - Clone function, `is_inbounds` instead of `out_of_bounds` (makes more
   sense), `NULL` pointer check on `mos_free`.

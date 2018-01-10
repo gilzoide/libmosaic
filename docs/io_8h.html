@@ -106,12 +106,12 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae977379a9f847e094ad8a2459968d18c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="io_8h.html#ae977379a9f847e094ad8a2459968d18c">fgetMOSAIC</a> (<a class="el" href="structMOSAIC.html">MOSAIC</a> *image, FILE *stream)</td></tr>
-<tr class="memdesc:ae977379a9f847e094ad8a2459968d18c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads image from the stream pointed to by stream.  <a href="#ae977379a9f847e094ad8a2459968d18c">More...</a><br /></td></tr>
-<tr class="separator:ae977379a9f847e094ad8a2459968d18c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37a15d9f46afd63153e78c697fe42853"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="io_8h.html#a37a15d9f46afd63153e78c697fe42853">fputMOSAIC</a> (const <a class="el" href="structMOSAIC.html">MOSAIC</a> *image, <a class="el" href="io_8h.html#a245fa4cf4cf7618df789a5861f2f0417">mos_attr_storage_fmt</a> fmt, FILE *stream)</td></tr>
-<tr class="memdesc:a37a15d9f46afd63153e78c697fe42853"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes image in the stream pointed to by stream.  <a href="#a37a15d9f46afd63153e78c697fe42853">More...</a><br /></td></tr>
-<tr class="separator:a37a15d9f46afd63153e78c697fe42853"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3bb826781d0c9f122a687e18d484fda"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="io_8h.html#ac3bb826781d0c9f122a687e18d484fda">mos_fget</a> (<a class="el" href="structMOSAIC.html">MOSAIC</a> *image, FILE *stream)</td></tr>
+<tr class="memdesc:ac3bb826781d0c9f122a687e18d484fda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads image from the stream pointed to by stream.  <a href="#ac3bb826781d0c9f122a687e18d484fda">More...</a><br /></td></tr>
+<tr class="separator:ac3bb826781d0c9f122a687e18d484fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48af4b04749428a6253b41338ca5ef79"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="io_8h.html#a48af4b04749428a6253b41338ca5ef79">mos_fput</a> (const <a class="el" href="structMOSAIC.html">MOSAIC</a> *image, <a class="el" href="io_8h.html#a245fa4cf4cf7618df789a5861f2f0417">mos_attr_storage_fmt</a> fmt, FILE *stream)</td></tr>
+<tr class="memdesc:a48af4b04749428a6253b41338ca5ef79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes image in the stream pointed to by stream.  <a href="#a48af4b04749428a6253b41338ca5ef79">More...</a><br /></td></tr>
+<tr class="separator:a48af4b04749428a6253b41338ca5ef79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7db7880a646fca83fb2b2e1a35fae03d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="io_8h.html#a7db7880a646fca83fb2b2e1a35fae03d">mos_save</a> (<a class="el" href="structMOSAIC.html">MOSAIC</a> *image, <a class="el" href="io_8h.html#a245fa4cf4cf7618df789a5861f2f0417">mos_attr_storage_fmt</a> fmt, const char *file_name)</td></tr>
 <tr class="memdesc:a7db7880a646fca83fb2b2e1a35fae03d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the image in a file by its name.  <a href="#a7db7880a646fca83fb2b2e1a35fae03d">More...</a><br /></td></tr>
 <tr class="separator:a7db7880a646fca83fb2b2e1a35fae03d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,14 +151,14 @@ Note also that there are more than one way of keeping the binary part, from unco
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ae977379a9f847e094ad8a2459968d18c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae977379a9f847e094ad8a2459968d18c">&#9670;&nbsp;</a></span>fgetMOSAIC()</h2>
+<a id="ac3bb826781d0c9f122a687e18d484fda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3bb826781d0c9f122a687e18d484fda">&#9670;&nbsp;</a></span>mos_fget()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int fgetMOSAIC </td>
+          <td class="memname">int mos_fget </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structMOSAIC.html">MOSAIC</a> *&#160;</td>
           <td class="paramname"><em>image</em>, </td>
@@ -200,14 +200,14 @@ Note also that there are more than one way of keeping the binary part, from unco
 
 </div>
 </div>
-<a id="a37a15d9f46afd63153e78c697fe42853"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37a15d9f46afd63153e78c697fe42853">&#9670;&nbsp;</a></span>fputMOSAIC()</h2>
+<a id="a48af4b04749428a6253b41338ca5ef79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48af4b04749428a6253b41338ca5ef79">&#9670;&nbsp;</a></span>mos_fput()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int fputMOSAIC </td>
+          <td class="memname">int mos_fput </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="structMOSAIC.html">MOSAIC</a> *&#160;</td>
           <td class="paramname"><em>image</em>, </td>
@@ -294,7 +294,7 @@ Note also that there are more than one way of keeping the binary part, from unco
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><em>errno</em> on FILE failure. </dd>
 <dd>
-<a class="el" href="io_8h.html#a37a15d9f46afd63153e78c697fe42853">fputMOSAIC</a> result otherwise. </dd></dl>
+<a class="el" href="io_8h.html#a48af4b04749428a6253b41338ca5ef79">mos_fput</a> result otherwise. </dd></dl>
 
 </div>
 </div>
@@ -334,7 +334,7 @@ Note also that there are more than one way of keeping the binary part, from unco
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><em>errno</em> on FILE failure. </dd>
 <dd>
-<a class="el" href="io_8h.html#ae977379a9f847e094ad8a2459968d18c">fgetMOSAIC</a> result otherwise. </dd></dl>
+<a class="el" href="io_8h.html#ac3bb826781d0c9f122a687e18d484fda">mos_fget</a> result otherwise. </dd></dl>
 
 </div>
 </div>
@@ -344,7 +344,7 @@ Note also that there are more than one way of keeping the binary part, from unco
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_175e8fbecd029d4b76b5c7f40ac7265a.html">mosaic</a></li><li class="navelem"><a class="el" href="io_8h.html">io.h</a></li>
-    <li class="footer">Generated on Tue Jan 9 2018 23:56:51 for Mosaic by
+    <li class="footer">Generated on Wed Jan 10 2018 12:56:50 for Mosaic by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
   </ul>

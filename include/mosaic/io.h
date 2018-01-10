@@ -64,7 +64,7 @@ typedef enum {
  * @return @ref MOS_ECOMPRESSION on compression error.
  * @return @ref MOS_EUNSUPPORTED if compression is not supported.
  */
-int fgetMOSAIC(MOSAIC *image, FILE *stream);
+int mos_fget(MOSAIC *image, FILE *stream);
 
 /**
  * Writes image in the stream pointed to by stream.
@@ -78,7 +78,7 @@ int fgetMOSAIC(MOSAIC *image, FILE *stream);
  * @return @ref MOS_ECOMPRESSION on compression error.
  * @return @ref MOS_EUNSUPPORTED if compression is not supported.
  */
-int fputMOSAIC(const MOSAIC *image, mos_attr_storage_fmt fmt, FILE *stream);
+int mos_fput(const MOSAIC *image, mos_attr_storage_fmt fmt, FILE *stream);
 
 /**
  * Saves the image in a file by its name
@@ -88,7 +88,7 @@ int fputMOSAIC(const MOSAIC *image, mos_attr_storage_fmt fmt, FILE *stream);
  * @param[in] file_name The new file name
  * 
  * @return _errno_ on FILE failure.
- * @return @ref fputMOSAIC result otherwise.
+ * @return @ref mos_fput result otherwise.
  */
 int mos_save(MOSAIC *image, mos_attr_storage_fmt fmt, const char *file_name);
 
@@ -99,7 +99,7 @@ int mos_save(MOSAIC *image, mos_attr_storage_fmt fmt, const char *file_name);
  * @param[in] file_name The file name
  * 
  * @return _errno_ on FILE failure.
- * @return @ref fgetMOSAIC result otherwise.
+ * @return @ref mos_fget result otherwise.
  */
 int mos_load(MOSAIC *image, const char *file_name);
 

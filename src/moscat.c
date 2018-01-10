@@ -161,7 +161,7 @@ int main(int argc, char *argv[]) {
 	if(!load_result) {
 		// asked to print it stream style
 		if(arguments.stream) {
-			fputMOSAIC(img, MOS_UNCOMPRESSED, stdout);
+			mos_fput(img, MOS_UNCOMPRESSED, stdout);
 		}
 		// or print it nicely
 		else {

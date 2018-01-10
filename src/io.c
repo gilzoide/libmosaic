@@ -41,7 +41,7 @@ char mos_is_valid_format(mos_attr_storage_fmt fmt) {
 /**
  * Compress the MOSAIC for writing it in stream, when using zlib compression
  *
- * It's just an auxiliary function for fputMOSAIC, it's not even in the header
+ * It's just an auxiliary function for mos_fput, it's not even in the header
  * @note It expects that you have just read the SEPARATOR and the MOS_COMPRESSED
  * marks from the `stream'.
  *
@@ -109,7 +109,7 @@ int compressMOSAIC(const MOSAIC *image, FILE *stream) {
 /**
  * Decompress the MOSAIC read from stream, when using zlib compression
  *
- * It's just an auxiliary function for fgetMOSAIC, it's not even in the header
+ * It's just an auxiliary function for mos_fget, it's not even in the header
  * @note It expects that you have just read the SEPARATOR and the MOS_COMPRESSED
  * marks from the `stream'.
  *
@@ -165,7 +165,7 @@ int uncompressMOSAIC(MOSAIC *image, FILE *stream) {
 #endif
 }
 
-int fgetMOSAIC(MOSAIC *image, FILE *stream) {
+int mos_fget(MOSAIC *image, FILE *stream) {
 	int new_height, new_width;
 	int dim_return = fscanf(stream, "%3dx%3d", &new_height, &new_width);
 	if(!dim_return || dim_return == EOF) {
@@ -174,7 +174,7 @@ int fgetMOSAIC(MOSAIC *image, FILE *stream) {
 	
 	// try to resize, get out if trouble
 	int ret;
-	if(ret = mos_resize(image, new_height, new_width)) {
+	if((ret = mos_resize(image, new_height, new_width)) != MOS_OK) {
 		return ret;
 	}
 
@@ -234,7 +234,7 @@ FILL_WITH_BLANK:
 	}
 
 	// Time for some Attributes! (color/bold)
-	switch (c) {
+	switch(c) {
 		case MOS_UNCOMPRESSED:
 			; size_t check = image->width;
 			for(i = 0; check == image->width && i < image->width; i++) {
@@ -262,7 +262,7 @@ FILL_WITH_BLANK:
 }
 
 
-int fputMOSAIC(const MOSAIC *image, mos_attr_storage_fmt fmt, FILE *stream) {
+int mos_fput(const MOSAIC *image, mos_attr_storage_fmt fmt, FILE *stream) {
 	fprintf(stream, "%dx%d\n", image->height, image->width);
 
 	// Mosaic //
@@ -309,7 +309,7 @@ int mos_save(MOSAIC *image, mos_attr_storage_fmt fmt, const char *file_name) {
 	if((f = fopen(file_name, "w")) == NULL) {
 		return errno;
 	}
-	int ret = fputMOSAIC(image, fmt, f);
+	int ret = mos_fput(image, fmt, f);
 	fclose(f);
 	return ret;
 }
@@ -320,7 +320,7 @@ int mos_load(MOSAIC *image, const char *file_name) {
 	if((f = fopen(file_name, "r")) == NULL) {
 		return errno;
 	}
-	int ret = fgetMOSAIC(image, f);
+	int ret = mos_fget(image, f);
 	fclose(f);
 	return ret;
 }
